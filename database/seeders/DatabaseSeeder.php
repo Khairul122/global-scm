@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
     {
         // 1. Seed Users
         User::updateOrCreate(
-            ['email' => 'admin@globalscm.com'],
+            ['email' => 'admin@gmail.com'],
             [
                 'name' => 'SCM Administrator',
                 'password' => Hash::make('password123'),
@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
         );
 
         User::updateOrCreate(
-            ['email' => 'user@globalscm.com'],
+            ['email' => 'user@gmail.com'],
             [
                 'name' => 'SCM Regular User',
                 'password' => Hash::make('password123'),
