@@ -84,16 +84,15 @@
     }
 
     async function removeFromWatchlist(iso) {
-        if (!confirm('Apakah Anda yakin ingin menghapus negara ini dari daftar pantauan?')) return;
-
         try {
             const res = await apiFetch(`/api/watchlist/${iso}`, { method: 'DELETE' });
             if (res.success) {
-                showToast('Negara berhasil dihapus dari daftar pantauan.');
                 loadWatchlist();
             }
         } catch (err) {
-            showToast(err.message || 'Gagal menghapus negara dari daftar pantauan.', 'error');
+            // Silently catch cancel or handle other errors
+            if (err.cancelled) return;
+            console.error(err);
         }
     }
 </script>

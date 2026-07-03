@@ -194,11 +194,11 @@
                 body: { role }
             });
             if (res.success) {
-                showToast('Role pengguna berhasil diubah.');
                 loadUsers();
             }
         } catch (err) {
-            showToast(err.message || 'Gagal mengubah role.', 'error');
+            if (err.cancelled) return;
+            console.error(err);
             loadUsers();
         }
     }
@@ -210,11 +210,11 @@
                 body: { is_active: !currentStatus }
             });
             if (res.success) {
-                showToast('Status pengguna berhasil diubah.');
                 loadUsers();
             }
         } catch (err) {
-            showToast(err.message || 'Gagal mengubah status.', 'error');
+            if (err.cancelled) return;
+            console.error(err);
         }
     }
 
@@ -292,11 +292,9 @@
                     currency: wCurrency
                 }
             });
-            if (res.success) {
-                showToast('Bobot kalkulasi risiko berhasil disimpan.');
-            }
         } catch (err) {
-            showToast(err.message || 'Gagal menyimpan bobot.', 'error');
+            if (err.cancelled) return;
+            console.error(err);
         }
     }
 
@@ -349,27 +347,25 @@
                 body: { type, word }
             });
             if (res.success) {
-                showToast(`Kata '${word}' ditambahkan ke leksikon.`);
                 wordInput.value = '';
                 loadLexicon();
             }
         } catch (err) {
-            showToast(err.message || 'Gagal menambahkan kata.', 'error');
+            console.error(err);
         }
     }
 
     async function deleteLexicon(id, type) {
-        if (!confirm('Hapus kata ini dari leksikon?')) return;
         try {
             const res = await apiFetch(`/api/admin/lexicon/${id}?type=${type}`, {
                 method: 'DELETE'
             });
             if (res.success) {
-                showToast('Kata berhasil dihapus dari leksikon.');
                 loadLexicon();
             }
         } catch (err) {
-            showToast(err.message || 'Gagal menghapus kata.', 'error');
+            if (err.cancelled) return;
+            console.error(err);
         }
     }
 </script>

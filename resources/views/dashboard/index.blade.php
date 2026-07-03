@@ -254,7 +254,6 @@
             if (isActive) {
                 const res = await apiFetch(`/api/watchlist/${currentCountryIso}`, { method: 'DELETE' });
                 if (res.success) {
-                    showToast('Berhasil dihapus dari daftar pantauan.');
                     updateWatchlistBtnUI(false);
                 }
             } else {
@@ -263,12 +262,12 @@
                     body: { country_iso: currentCountryIso }
                 });
                 if (res.success) {
-                    showToast('Berhasil ditambahkan ke daftar pantauan.');
                     updateWatchlistBtnUI(true);
                 }
             }
         } catch (err) {
-            showToast(err.message || 'Gagal melakukan aksi watchlist.', 'error');
+            if (err.cancelled) return;
+            console.error(err);
         }
     });
 

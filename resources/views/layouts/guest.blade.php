@@ -8,6 +8,9 @@
 
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" rel="stylesheet">
 
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @yield('styles')
@@ -53,5 +56,41 @@
     <div id="toastRoot" class="fixed bottom-4 right-4 z-[100] flex flex-col gap-2 items-end"></div>
 
     @yield('scripts')
+
+    @if($errors->any())
+        <script>
+            window.addEventListener('DOMContentLoaded', () => {
+                Swal.fire({
+                    title: 'Kesalahan Validasi',
+                    text: "{{ $errors->first() }}",
+                    icon: 'error',
+                    confirmButtonColor: '#dc2626',
+                    background: '#ffffff',
+                    customClass: {
+                        popup: 'rounded-2xl border border-border shadow-2xl',
+                        confirmButton: 'btn-skeuo !bg-none !bg-[var(--color-danger)] !shadow-none'
+                    }
+                });
+            });
+        </script>
+    @endif
+
+    @if(session('logout_success'))
+        <script>
+            window.addEventListener('DOMContentLoaded', () => {
+                Swal.fire({
+                    title: 'Keluar Berhasil',
+                    text: "{{ session('logout_success') }}",
+                    icon: 'success',
+                    confirmButtonColor: '#0f766e',
+                    background: '#ffffff',
+                    customClass: {
+                        popup: 'rounded-2xl border border-border shadow-2xl',
+                        confirmButton: 'btn-skeuo !bg-none !bg-[var(--color-primary)] !shadow-none'
+                    }
+                });
+            });
+        </script>
+    @endif
 </body>
 </html>

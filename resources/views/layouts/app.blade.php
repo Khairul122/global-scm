@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
 
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- App Styles / Scripts (Tailwind CSS 4 + Alpine.js via Vite) -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -77,7 +80,7 @@
                 </button>
                 <div x-show="open" x-cloak x-transition.origin.bottom
                      class="absolute bottom-full left-0 right-0 mb-2 skeuo-card p-1">
-                    <form action="{{ route('logout') }}" method="POST">
+                    <form action="{{ route('logout') }}" method="POST" class="logout-form">
                         @csrf
                         <button type="submit" class="w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-danger hover:bg-danger/10 text-sm font-medium min-h-11">
                             <i class="fa-solid fa-right-from-bracket"></i> Keluar
@@ -146,7 +149,7 @@
                     <span class="inline-block px-2 py-0.5 rounded-full text-[10px] font-bold {{ Auth::user()->role === 'admin' ? 'bg-danger text-white' : 'bg-primary text-white' }}">{{ strtoupper(Auth::user()->role) }}</span>
                 </div>
             </div>
-            <form action="{{ route('logout') }}" method="POST">
+            <form action="{{ route('logout') }}" method="POST" class="logout-form">
                 @csrf
                 <button type="submit" class="w-full flex items-center gap-2 px-3 py-3 rounded-xl text-danger hover:bg-danger/10 text-sm font-medium min-h-11">
                     <i class="fa-solid fa-right-from-bracket"></i> Keluar
@@ -171,5 +174,66 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
 
     @yield('scripts')
+
+    <!-- Logout confirmation and login/register success handlers -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Intercept all forms with class logout-form
+            document.querySelectorAll('.logout-form').forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    Swal.fire({
+                        title: 'Konfirmasi Keluar',
+                        text: 'Apakah Anda yakin ingin keluar dari aplikasi?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Ya, Keluar',
+                        cancelButtonText: 'Batal',
+                        confirmButtonColor: '#dc2626',
+                        cancelButtonColor: '#64748b',
+                        background: '#ffffff',
+                        customClass: {
+                            popup: 'rounded-2xl border border-border shadow-2xl',
+                            confirmButton: 'btn-skeuo !bg-none !bg-[var(--color-danger)] !shadow-none',
+                            cancelButton: 'btn-skeuo-outline !shadow-none'
+                        }
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
+                    });
+                });
+            });
+
+            // 2. Display success alerts for login & register
+            @if(session('login_success'))
+                Swal.fire({
+                    title: 'Login Berhasil!',
+                    text: "{{ session('login_success') }}",
+                    icon: 'success',
+                    confirmButtonColor: '#0f766e',
+                    background: '#ffffff',
+                    customClass: {
+                        popup: 'rounded-2xl border border-border shadow-2xl',
+                        confirmButton: 'btn-skeuo !bg-none !bg-[var(--color-primary)] !shadow-none'
+                    }
+                });
+            @endif
+
+            @if(session('register_success'))
+                Swal.fire({
+                    title: 'Pendaftaran Berhasil!',
+                    text: "{{ session('register_success') }}",
+                    icon: 'success',
+                    confirmButtonColor: '#0f766e',
+                    background: '#ffffff',
+                    customClass: {
+                        popup: 'rounded-2xl border border-border shadow-2xl',
+                        confirmButton: 'btn-skeuo !bg-none !bg-[var(--color-primary)] !shadow-none'
+                    }
+                });
+            @endif
+        });
+    </script>
 </body>
 </html>

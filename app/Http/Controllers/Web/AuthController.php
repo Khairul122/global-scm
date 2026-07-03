@@ -52,7 +52,7 @@ class AuthController extends Controller
 
             $request->session()->regenerate();
 
-            return redirect()->intended('/dashboard');
+            return redirect()->intended('/dashboard')->with('login_success', 'Selamat datang kembali, ' . $user->name . '!');
         }
 
         RateLimiter::hit($throttleKey, 60);
@@ -91,7 +91,7 @@ class AuthController extends Controller
         $user->update(['last_login_at' => now()]);
         $request->session()->regenerate();
 
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard')->with('register_success', 'Akun Anda berhasil didaftarkan! Selamat datang.');
     }
 
     public function logout(Request $request)
@@ -101,6 +101,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/')->with('logout_success', 'Anda telah berhasil keluar dari platform.');
     }
 }
