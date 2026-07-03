@@ -20,15 +20,15 @@
 
         <!-- Middle Cartoon Illustration & Copy -->
         <div class="my-auto space-y-8 z-10 text-center animate-slide-up">
-            <!-- Cartoon Image Asset -->
+            <!-- Cartoon Image Asset (Login Specific) -->
             <div class="relative inline-block max-w-[280px] sm:max-w-[320px] mx-auto">
-                <img src="{{ asset('images/auth_illustration.png') }}" alt="{{ __('Ilustrasi Logistik Rantai Pasok') }}" class="w-full h-auto rounded-2xl drop-shadow-lg transform -rotate-1 hover:rotate-0 transition-transform duration-300">
+                <img src="{{ asset('images/auth_illustration.png') }}" alt="Ilustrasi Logistik Rantai Pasok" class="w-full h-auto rounded-2xl drop-shadow-lg transform -rotate-1 hover:rotate-0 transition-transform duration-300">
             </div>
 
             <div class="space-y-3 max-w-sm mx-auto text-left">
-                <h2 class="text-2xl font-extrabold leading-tight text-[#0f172a]">{{ __('Keputusan Logistik yang Cerdas Dimulai di Sini') }}</h2>
+                <h2 class="text-2xl font-extrabold leading-tight text-[#0f172a]">Keputusan Logistik yang Cerdas Dimulai di Sini</h2>
                 <p class="text-[#475569] text-sm leading-relaxed">
-                    {{ __('Masuk untuk mengakses dasbor risiko kustom, memantau watchlist Anda, menganalisis pelabuhan global, dan mengambil keputusan mitigasi rantai pasok berbasis data.') }}
+                    Masuk untuk mengakses dasbor risiko kustom, memantau watchlist Anda, menganalisis pelabuhan global, dan mengambil keputusan mitigasi rantai pasok berbasis data.
                 </p>
             </div>
         </div>
@@ -53,8 +53,8 @@
                     <div class="bg-primary/10 inline-flex p-4 rounded-full mb-3">
                         <i class="fa-solid fa-lock text-primary text-2xl animate-[bounce_3s_infinite]"></i>
                     </div>
-                    <h3 class="font-bold text-2xl text-dark">{{ __('Masuk Platform') }}</h3>
-                    <p class="text-muted-foreground text-sm mt-1">{{ __('Gunakan akun Anda untuk mengakses fitur watchlist personal') }}</p>
+                    <h3 class="font-bold text-2xl text-dark">Masuk Platform</h3>
+                    <p class="text-muted-foreground text-sm mt-1">Gunakan akun Anda untuk mengakses fitur watchlist personal</p>
                 </div>
 
                 <form method="POST" action="{{ route('login') }}" class="space-y-5">
@@ -62,7 +62,7 @@
                     <!-- Email Field -->
                     <div class="space-y-1.5">
                         <label for="email" class="block text-sm font-bold text-muted-foreground transition-colors duration-200"
-                               :class="emailFocused ? 'text-primary' : ''">{{ __('Alamat Email') }}</label>
+                               :class="emailFocused ? 'text-primary' : ''">Alamat Email</label>
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 pl-3 flex items-center transition-colors duration-200"
                                   :class="emailFocused ? 'text-primary' : 'text-muted-foreground/60'">
@@ -77,7 +77,7 @@
                     <div class="space-y-1.5">
                         <div class="flex items-center justify-between">
                             <label for="password" class="block text-sm font-bold text-muted-foreground transition-colors duration-200"
-                                   :class="passwordFocused ? 'text-primary' : ''">{{ __('Password') }}</label>
+                                   :class="passwordFocused ? 'text-primary' : ''">Password</label>
                         </div>
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 pl-3 flex items-center transition-colors duration-200"
@@ -92,35 +92,30 @@
                     <div class="flex items-center justify-between pt-1">
                         <div class="flex items-center gap-2">
                             <input type="checkbox" class="w-4 h-4 accent-primary rounded cursor-pointer" id="remember" name="remember">
-                            <label class="text-sm text-muted-foreground cursor-pointer select-none" for="remember">{{ __('Ingat Saya') }}</label>
+                            <label class="text-sm text-muted-foreground cursor-pointer select-none" for="remember">Ingat Saya</label>
                         </div>
                     </div>
 
                     <button type="submit" class="btn-skeuo w-full !min-h-12 !text-base mt-2 relative overflow-hidden group">
                         <span class="absolute inset-0 w-full h-full bg-white/10 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></span>
                         <span class="relative z-10 flex items-center justify-center gap-2">
-                            {{ __('Masuk') }} <i class="fa-solid fa-arrow-right-to-bracket transition-transform group-hover:translate-x-1"></i>
+                            Masuk <i class="fa-solid fa-arrow-right-to-bracket transition-transform group-hover:translate-x-1"></i>
                         </span>
                     </button>
 
                     <!-- Divider & Navigation Buttons integrated inside the form card -->
                     <div class="text-center pt-4 border-t border-border mt-5 space-y-4">
                         <p class="text-sm text-muted-foreground">
-                            {{ __('Belum punya akun?') }} 
+                            Belum punya akun? 
                             <a href="{{ route('register') }}" class="text-primary font-bold hover:underline">
-                                {{ __('Daftar Sekarang') }}
+                                Daftar Sekarang
                             </a>
                         </p>
                         
-                        <div class="pt-2 flex gap-2">
-                            <a href="{{ route('home') }}" class="btn-skeuo-outline flex-grow flex items-center justify-center gap-2 !min-h-11 hover:scale-[1.01] active:scale-95 transition-all">
-                                <i class="fa-solid fa-house"></i> {{ __('Kembali ke Beranda') }}
+                        <div class="pt-2">
+                            <a href="{{ route('home') }}" class="btn-skeuo-outline w-full flex items-center justify-center gap-2 !min-h-11 hover:scale-[1.01] active:scale-95 transition-all">
+                                <i class="fa-solid fa-house"></i> Kembali ke Beranda
                             </a>
-                            <!-- Lang Switcher in Card -->
-                            <div class="flex items-center border border-border rounded-xl px-2 bg-surface">
-                                <a href="{{ route('lang.switch', 'id') }}" class="px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all {{ app()->getLocale() === 'id' ? 'bg-primary text-white shadow-sm' : 'text-muted-foreground hover:text-foreground' }}">ID</a>
-                                <a href="{{ route('lang.switch', 'en') }}" class="px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all {{ app()->getLocale() === 'en' ? 'bg-primary text-white shadow-sm' : 'text-muted-foreground hover:text-foreground' }}">EN</a>
-                            </div>
                         </div>
                     </div>
                 </form>

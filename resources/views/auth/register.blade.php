@@ -20,15 +20,15 @@
 
         <!-- Middle Cartoon Illustration & Copy -->
         <div class="my-auto space-y-8 z-10 text-center animate-slide-up">
-            <!-- Cartoon Image Asset -->
+            <!-- Cartoon Image Asset (Register Specific) -->
             <div class="relative inline-block max-w-[280px] sm:max-w-[320px] mx-auto">
-                <img src="{{ asset('images/auth_illustration.png') }}" alt="{{ __('Ilustrasi Logistik Rantai Pasok') }}" class="w-full h-auto rounded-2xl drop-shadow-lg transform rotate-1 hover:rotate-0 transition-transform duration-300">
+                <img src="{{ asset('images/register_illustration.png') }}" alt="Ilustrasi Registrasi Rantai Pasok" class="w-full h-auto rounded-2xl drop-shadow-lg transform rotate-1 hover:rotate-0 transition-transform duration-300">
             </div>
 
             <div class="space-y-3 max-w-sm mx-auto text-left">
-                <h2 class="text-2xl font-extrabold leading-tight text-[#0f172a]">{{ __('Buat Akun Anda & Mulai Memantau') }}</h2>
+                <h2 class="text-2xl font-extrabold leading-tight text-[#0f172a]">Buat Akun Anda & Mulai Memantau</h2>
                 <p class="text-[#475569] text-sm leading-relaxed">
-                    {{ __('Daftar akun hari ini untuk mempersonalisasi daftar pantauan Anda. Amankan rute rantai pasok Anda dari risiko iklim ekstrem dan guncangan ekonomi dunia.') }}
+                    Daftar akun hari ini untuk mempersonalisasi daftar pantauan Anda. Amankan rute rantai pasok Anda dari risiko iklim ekstrem dan guncangan ekonomi dunia.
                 </p>
             </div>
         </div>
@@ -53,8 +53,8 @@
                     <div class="bg-primary/10 inline-flex p-4 rounded-full mb-3">
                         <i class="fa-solid fa-user-plus text-primary text-2xl animate-[bounce_3s_infinite]"></i>
                     </div>
-                    <h3 class="font-bold text-2xl text-dark">{{ __('Daftar Akun Baru') }}</h3>
-                    <p class="text-muted-foreground text-sm mt-1">{{ __('Daftarkan diri Anda untuk memantau data risiko secara personal') }}</p>
+                    <h3 class="font-bold text-2xl text-dark">Daftar Akun Baru</h3>
+                    <p class="text-muted-foreground text-sm mt-1">Daftarkan diri Anda untuk memantau data risiko secara personal</p>
                 </div>
 
                 <form method="POST" action="{{ route('register') }}" class="space-y-4">
@@ -62,13 +62,13 @@
                     <!-- Name Field -->
                     <div class="space-y-1.5">
                         <label for="name" class="block text-sm font-bold text-muted-foreground transition-colors duration-200"
-                               :class="nameFocused ? 'text-primary' : ''">{{ __('Nama Lengkap') }}</label>
+                               :class="nameFocused ? 'text-primary' : ''">Nama Lengkap</label>
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 pl-3 flex items-center transition-colors duration-200"
                                   :class="nameFocused ? 'text-primary' : 'text-muted-foreground/60'">
                                 <i class="fa-solid fa-user"></i>
                             </span>
-                            <input type="text" class="input-skeuo !pl-9 transition-all" id="name" name="name" value="{{ old('name') }}" placeholder="{{ __('Nama Lengkap Anda') }}" required autofocus
+                            <input type="text" class="input-skeuo !pl-9 transition-all" id="name" name="name" value="{{ old('name') }}" placeholder="Nama Lengkap Anda" required autofocus
                                    @focus="nameFocused = true" @blur="nameFocused = false">
                         </div>
                     </div>
@@ -76,7 +76,7 @@
                     <!-- Email Field -->
                     <div class="space-y-1.5">
                         <label for="email" class="block text-sm font-bold text-muted-foreground transition-colors duration-200"
-                               :class="emailFocused ? 'text-primary' : ''">{{ __('Alamat Email') }}</label>
+                               :class="emailFocused ? 'text-primary' : ''">Alamat Email</label>
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 pl-3 flex items-center transition-colors duration-200"
                                   :class="emailFocused ? 'text-primary' : 'text-muted-foreground/60'">
@@ -90,7 +90,7 @@
                     <!-- Password Field -->
                     <div class="space-y-1.5">
                         <label for="password" class="block text-sm font-bold text-muted-foreground transition-colors duration-200"
-                               :class="passwordFocused ? 'text-primary' : ''">{{ __('Password') }}</label>
+                               :class="passwordFocused ? 'text-primary' : ''">Password</label>
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 pl-3 flex items-center transition-colors duration-200"
                                   :class="passwordFocused ? 'text-primary' : 'text-muted-foreground/60'">
@@ -104,13 +104,13 @@
                     <!-- Confirm Password Field -->
                     <div class="space-y-1.5">
                         <label for="password_confirmation" class="block text-sm font-bold text-muted-foreground transition-colors duration-200"
-                               :class="confirmFocused ? 'text-primary' : ''">{{ __('Konfirmasi Password') }}</label>
+                               :class="confirmFocused ? 'text-primary' : ''">Konfirmasi Password</label>
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 pl-3 flex items-center transition-colors duration-200"
                                   :class="confirmFocused ? 'text-primary' : 'text-muted-foreground/60'">
                                 <i class="fa-solid fa-shield"></i>
                             </span>
-                            <input type="password" class="input-skeuo !pl-9 transition-all" id="password_confirmation" name="password_confirmation" placeholder="{{ __('Ulangi password') }}" required
+                            <input type="password" class="input-skeuo !pl-9 transition-all" id="password_confirmation" name="password_confirmation" placeholder="Ulangi password" required
                                    @focus="confirmFocused = true" @blur="confirmFocused = false">
                         </div>
                     </div>
@@ -118,28 +118,23 @@
                     <button type="submit" class="btn-skeuo w-full !min-h-12 !text-base mt-4 relative overflow-hidden group">
                         <span class="absolute inset-0 w-full h-full bg-white/10 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></span>
                         <span class="relative z-10 flex items-center justify-center gap-2">
-                            {{ __('Daftar Sekarang') }} <i class="fa-solid fa-arrow-right-to-bracket transition-transform group-hover:translate-x-1"></i>
+                            Daftar Sekarang <i class="fa-solid fa-arrow-right-to-bracket transition-transform group-hover:translate-x-1"></i>
                         </span>
                     </button>
 
                     <!-- Divider & Navigation Buttons integrated inside the form card -->
                     <div class="text-center pt-4 border-t border-border mt-5 space-y-4">
                         <p class="text-sm text-muted-foreground">
-                            {{ __('Sudah punya akun?') }} 
+                            Sudah punya akun? 
                             <a href="{{ route('login') }}" class="text-primary font-bold hover:underline">
-                                {{ __('Masuk di Sini') }}
+                                Masuk di Sini
                             </a>
                         </p>
                         
-                        <div class="pt-2 flex gap-2">
-                            <a href="{{ route('home') }}" class="btn-skeuo-outline flex-grow flex items-center justify-center gap-2 !min-h-11 hover:scale-[1.01] active:scale-95 transition-all">
-                                <i class="fa-solid fa-house"></i> {{ __('Kembali ke Beranda') }}
+                        <div class="pt-2">
+                            <a href="{{ route('home') }}" class="btn-skeuo-outline w-full flex items-center justify-center gap-2 !min-h-11 hover:scale-[1.01] active:scale-95 transition-all">
+                                <i class="fa-solid fa-house"></i> Kembali ke Beranda
                             </a>
-                            <!-- Lang Switcher in Card -->
-                            <div class="flex items-center border border-border rounded-xl px-2 bg-surface">
-                                <a href="{{ route('lang.switch', 'id') }}" class="px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all {{ app()->getLocale() === 'id' ? 'bg-primary text-white shadow-sm' : 'text-muted-foreground hover:text-foreground' }}">ID</a>
-                                <a href="{{ route('lang.switch', 'en') }}" class="px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all {{ app()->getLocale() === 'en' ? 'bg-primary text-white shadow-sm' : 'text-muted-foreground hover:text-foreground' }}">EN</a>
-                            </div>
                         </div>
                     </div>
                 </form>

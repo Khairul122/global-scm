@@ -53,7 +53,7 @@
                    class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors duration-150
                           {{ $active ? 'bg-primary/10 text-primary border-l-2 border-primary' : 'text-muted-foreground hover:text-foreground hover:bg-muted border-l-2 border-transparent' }}">
                     <i class="fa-solid {{ $link['icon'] }} w-4 text-center {{ $link['icon'] === 'fa-star' ? 'text-warning' : '' }}"></i>
-                    <span>{{ __($link['label']) }}</span>
+                    <span>{{ $link['label'] }}</span>
                 </a>
             @endforeach
 
@@ -62,19 +62,12 @@
                    class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors duration-150
                           {{ Request::is('admin') ? 'bg-primary/10 text-primary border-l-2 border-primary' : 'text-muted-foreground hover:text-foreground hover:bg-muted border-l-2 border-transparent' }}">
                     <i class="fa-solid fa-user-shield w-4 text-center"></i>
-                    <span>{{ __('Admin') }}</span>
+                    <span>Admin</span>
                 </a>
             @endif
         </nav>
 
-        <!-- Sidebar Lang Switcher -->
-        <div class="px-4 py-2 border-t border-border flex items-center justify-between shrink-0">
-            <span class="text-xs text-muted-foreground font-semibold">Language</span>
-            <div class="flex items-center gap-1 bg-muted p-1 rounded-lg">
-                <a href="{{ route('lang.switch', 'id') }}" class="px-2.5 py-1 rounded-md text-[11px] font-bold transition-all {{ app()->getLocale() === 'id' ? 'bg-primary text-white shadow-sm' : 'text-muted-foreground hover:text-foreground' }}">ID</a>
-                <a href="{{ route('lang.switch', 'en') }}" class="px-2.5 py-1 rounded-md text-[11px] font-bold transition-all {{ app()->getLocale() === 'en' ? 'bg-primary text-white shadow-sm' : 'text-muted-foreground hover:text-foreground' }}">EN</a>
-            </div>
-        </div>
+
 
         <div class="p-3 border-t border-border shrink-0">
             <div x-data="{ open: false }" class="relative">
@@ -92,7 +85,7 @@
                     <form action="{{ route('logout') }}" method="POST" class="logout-form">
                         @csrf
                         <button type="submit" class="w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-danger hover:bg-danger/10 text-sm font-medium min-h-11">
-                            <i class="fa-solid fa-right-from-bracket"></i> {{ __('Keluar') }}
+                            <i class="fa-solid fa-right-from-bracket"></i> Keluar
                         </button>
                     </form>
                 </div>
@@ -136,7 +129,7 @@
                    class="flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium min-h-11
                           {{ $active ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:text-foreground hover:bg-muted' }}">
                     <i class="fa-solid {{ $link['icon'] }} w-4 text-center {{ $link['icon'] === 'fa-star' ? 'text-warning' : '' }}"></i>
-                    <span>{{ __($link['label']) }}</span>
+                    <span>{{ $link['label'] }}</span>
                 </a>
             @endforeach
 
@@ -145,20 +138,12 @@
                    class="flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium min-h-11
                           {{ Request::is('admin') ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:text-foreground hover:bg-muted' }}">
                     <i class="fa-solid fa-user-shield w-4 text-center"></i>
-                    <span>{{ __('Admin') }}</span>
+                    <span>Admin</span>
                 </a>
             @endif
         </nav>
 
-        <div class="p-3 border-t border-border shrink-0">
-            <!-- Mobile Lang Switcher -->
-            <div class="px-3 py-2 flex items-center justify-between mb-3 border-b border-border/50 pb-3">
-                <span class="text-xs text-muted-foreground font-semibold">Language</span>
-                <div class="flex items-center gap-1 bg-muted p-1 rounded-lg">
-                    <a href="{{ route('lang.switch', 'id') }}" class="px-2.5 py-1 rounded-md text-[11px] font-bold transition-all {{ app()->getLocale() === 'id' ? 'bg-primary text-white shadow-sm' : 'text-muted-foreground' }}">ID</a>
-                    <a href="{{ route('lang.switch', 'en') }}" class="px-2.5 py-1 rounded-md text-[11px] font-bold transition-all {{ app()->getLocale() === 'en' ? 'bg-primary text-white shadow-sm' : 'text-muted-foreground' }}">EN</a>
-                </div>
-            </div>
+
             <div class="flex items-center gap-3 px-3 py-2 mb-2">
                 <i class="fa-solid fa-user-circle text-primary text-xl"></i>
                 <div class="flex-1 overflow-hidden">
@@ -169,7 +154,7 @@
             <form action="{{ route('logout') }}" method="POST" class="logout-form">
                 @csrf
                 <button type="submit" class="w-full flex items-center gap-2 px-3 py-3 rounded-xl text-danger hover:bg-danger/10 text-sm font-medium min-h-11">
-                    <i class="fa-solid fa-right-from-bracket"></i> {{ __('Keluar') }}
+                    <i class="fa-solid fa-right-from-bracket"></i> Keluar
                 </button>
             </form>
         </div>

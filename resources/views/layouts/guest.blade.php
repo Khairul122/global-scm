@@ -26,14 +26,8 @@
             </a>
 
             <nav class="hidden md:flex items-center gap-3">
-                <a href="{{ route('login') }}" class="btn-skeuo-outline">{{ __('Masuk') }}</a>
-                <a href="{{ route('register') }}" class="btn-skeuo">{{ __('Daftar') }}</a>
-
-                <!-- Lang Switcher -->
-                <div class="flex items-center gap-1 bg-surface border border-border p-1 rounded-xl ml-2">
-                    <a href="{{ route('lang.switch', 'id') }}" class="px-2.5 py-1 rounded-lg text-xs font-bold transition-all {{ app()->getLocale() === 'id' ? 'bg-primary text-white shadow-sm' : 'text-muted-foreground hover:text-foreground' }}">ID</a>
-                    <a href="{{ route('lang.switch', 'en') }}" class="px-2.5 py-1 rounded-lg text-xs font-bold transition-all {{ app()->getLocale() === 'en' ? 'bg-primary text-white shadow-sm' : 'text-muted-foreground hover:text-foreground' }}">EN</a>
-                </div>
+                <a href="{{ route('login') }}" class="btn-skeuo-outline">Masuk</a>
+                <a href="{{ route('register') }}" class="btn-skeuo">Daftar</a>
             </nav>
 
             <button @click="mobileMenuOpen = !mobileMenuOpen" aria-label="Buka menu"
@@ -43,15 +37,8 @@
         </div>
 
         <div x-show="mobileMenuOpen" x-cloak x-transition class="md:hidden border-t border-border bg-white px-4 py-4 flex flex-col gap-3">
-            <a href="{{ route('login') }}" class="btn-skeuo-outline w-full">{{ __('Masuk') }}</a>
-            <a href="{{ route('register') }}" class="btn-skeuo w-full">{{ __('Daftar') }}</a>
-            <div class="flex items-center justify-between border-t border-border pt-3 mt-1">
-                <span class="text-xs text-muted-foreground font-semibold">Pilih Bahasa / Language</span>
-                <div class="flex items-center gap-1 bg-surface border border-border p-1 rounded-xl">
-                    <a href="{{ route('lang.switch', 'id') }}" class="px-2.5 py-1 rounded-lg text-xs font-bold {{ app()->getLocale() === 'id' ? 'bg-primary text-white shadow-sm' : 'text-muted-foreground' }}">ID</a>
-                    <a href="{{ route('lang.switch', 'en') }}" class="px-2.5 py-1 rounded-lg text-xs font-bold {{ app()->getLocale() === 'en' ? 'bg-primary text-white shadow-sm' : 'text-muted-foreground' }}">EN</a>
-                </div>
-            </div>
+            <a href="{{ route('login') }}" class="btn-skeuo-outline w-full">Masuk</a>
+            <a href="{{ route('register') }}" class="btn-skeuo w-full">Daftar</a>
         </div>
     </header>
     @endif
@@ -61,9 +48,67 @@
     </main>
 
     @if(!request()->routeIs('login') && !request()->routeIs('register'))
-    <footer class="border-t border-border bg-white py-6">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-muted-foreground">
-            &copy; {{ date('Y') }} GlobalSCM Intel &mdash; Global Supply Chain Risk Intelligence Platform
+    <footer class="border-t border-slate-800 bg-[#0b1329] text-slate-400 py-16">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                <!-- Branding Column -->
+                <div class="space-y-4 text-left">
+                    <a href="{{ route('home') }}" class="flex items-center gap-2 text-white">
+                        <i class="fa-solid fa-earth-americas text-primary text-xl"></i>
+                        <span class="font-heading font-bold tracking-wide">GlobalSCM <span class="text-primary">Intel</span></span>
+                    </a>
+                    <p class="text-xs leading-relaxed text-slate-400">
+                        Platform intelijen risiko rantai pasok global berbasis Decision Support System untuk mitigasi risiko iklim, inflasi, valas, dan geopolitik secara real-time.
+                    </p>
+                    <div class="flex items-center gap-3 pt-2">
+                        <a href="#" class="w-8 h-8 rounded-xl bg-slate-800 hover:bg-primary hover:text-white flex items-center justify-center transition-colors text-xs text-slate-400"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-xl bg-slate-800 hover:bg-primary hover:text-white flex items-center justify-center transition-colors text-xs text-slate-400"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-xl bg-slate-800 hover:bg-primary hover:text-white flex items-center justify-center transition-colors text-xs text-slate-400"><i class="fa-brands fa-github"></i></a>
+                    </div>
+                </div>
+
+                <!-- Column 2: Fitur Utama -->
+                <div class="space-y-3 text-left">
+                    <h5 class="text-white font-bold text-sm tracking-wider uppercase">Fitur Analitik</h5>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#" class="hover:text-white transition-colors">Dasbor Utama</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Pemantauan Cuaca Ekstrem</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Volatilitas Valuta Asing</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Analisis Sentimen Berita</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Navigasi Cepat -->
+                <div class="space-y-3 text-left">
+                    <h5 class="text-white font-bold text-sm tracking-wider uppercase">Akses Cepat</h5>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="{{ route('login') }}" class="hover:text-white transition-colors">Masuk Platform</a></li>
+                        <li><a href="{{ route('register') }}" class="hover:text-white transition-colors">Daftar Akun</a></li>
+                        <li><a href="{{ route('home') }}" class="hover:text-white transition-colors">Halaman Beranda</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Kontak & Keamanan -->
+                <div class="space-y-3 text-left">
+                    <h5 class="text-white font-bold text-sm tracking-wider uppercase">Dukungan</h5>
+                    <ul class="space-y-2 text-xs">
+                        <li><span class="block">Email: support@globalscm.id</span></li>
+                        <li><span class="block">Pusat Bantuan: docs.globalscm.id</span></li>
+                        <li><span class="block">Status Server: <span class="text-emerald-400 font-bold"><i class="fa-solid fa-circle text-[8px] animate-pulse"></i> Normal</span></span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Section -->
+            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs">
+                <div>
+                    &copy; {{ date('Y') }} GlobalSCM Intel. Hak Cipta Dilindungi Undang-Undang.
+                </div>
+                <div class="flex items-center gap-6">
+                    <a href="#" class="hover:text-white transition-colors">Ketentuan Layanan</a>
+                    <a href="#" class="hover:text-white transition-colors">Kebijakan Privasi</a>
+                </div>
+            </div>
         </div>
     </footer>
     @endif
