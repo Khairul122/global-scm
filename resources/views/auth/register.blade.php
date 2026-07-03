@@ -3,7 +3,7 @@
 @section('title', 'Daftar - Global SCM Risk Intel')
 
 @section('content')
-<div class="flex items-center justify-center" style="min-height: 65vh;">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-1 flex items-center justify-center" style="min-height: 65vh;">
     <div class="w-full max-w-md animate-slide-up">
         <div class="skeuo-card p-8">
             <div class="text-center mb-6">

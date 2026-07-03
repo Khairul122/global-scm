@@ -41,10 +41,8 @@
         </div>
     </header>
 
-    <main class="flex-1">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            @yield('content')
-        </div>
+    <main class="flex-1 flex flex-col">
+        @yield('content')
     </main>
 
     <footer class="border-t border-border bg-white py-6">
