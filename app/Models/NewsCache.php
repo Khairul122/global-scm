@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 
-#[Fillable(['country_id', 'title', 'description', 'url', 'category', 'published_at'])]
+#[Fillable(['country_id', 'title', 'description', 'url', 'image_url', 'category', 'published_at'])]
 class NewsCache extends Model
 {
     protected $table = 'news_cache';

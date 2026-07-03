@@ -48,6 +48,7 @@ class GNewsClient
                         'title' => $art['title'] ?? '',
                         'description' => $art['description'] ?? '',
                         'url' => $art['url'] ?? '',
+                        'image_url' => $art['image'] ?? null,
                         'published_at' => $art['publishedAt'] ?? now()->toIso8601String(),
                         'source' => $art['source']['name'] ?? 'GNews'
                     ];

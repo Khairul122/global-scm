@@ -141,20 +141,29 @@
                             minute: '2-digit'
                         });
 
+                        const thumbnail = art.image_url
+                            ? `<img src="${art.image_url}" alt="" class="w-full sm:w-32 h-32 sm:h-full object-cover rounded-xl shrink-0" loading="lazy" onerror="this.remove()">`
+                            : '';
+
                         card.innerHTML = `
-                            <div class="flex justify-between items-start mb-2">
-                                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold uppercase ${badgeClasses}">
-                                    <i class="fa-solid fa-brain"></i> ${art.sentiment?.label.toUpperCase() || 'NEUTRAL'}
-                                </span>
-                                <small class="text-muted-foreground">${pubDate}</small>
-                            </div>
-                            <h5 class="font-bold mb-2">
-                                <a href="${art.url}" target="_blank" rel="noopener" class="hover:text-primary">${art.title}</a>
-                            </h5>
-                            <p class="text-muted-foreground text-sm mb-2">${art.description || 'Tidak ada deskripsi singkat.'}</p>
-                            <div class="flex justify-between items-center">
-                                <span class="text-sm text-primary"><i class="fa-solid fa-tags mr-1"></i> ${art.category}</span>
-                                <small class="text-muted-foreground"><i class="fa-solid fa-chart-bar mr-1"></i> Positif: ${art.sentiment?.positive || 0} | Negatif: ${art.sentiment?.negative || 0}</small>
+                            <div class="flex flex-col sm:flex-row gap-4">
+                                ${thumbnail}
+                                <div class="flex-1 min-w-0">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold uppercase ${badgeClasses}">
+                                            <i class="fa-solid fa-brain"></i> ${art.sentiment?.label.toUpperCase() || 'NEUTRAL'}
+                                        </span>
+                                        <small class="text-muted-foreground">${pubDate}</small>
+                                    </div>
+                                    <h5 class="font-bold mb-2">
+                                        <a href="${art.url}" target="_blank" rel="noopener" class="hover:text-primary">${art.title}</a>
+                                    </h5>
+                                    <p class="text-muted-foreground text-sm mb-2">${art.description || 'Tidak ada deskripsi singkat.'}</p>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-sm text-primary"><i class="fa-solid fa-tags mr-1"></i> ${art.category}</span>
+                                        <small class="text-muted-foreground"><i class="fa-solid fa-chart-bar mr-1"></i> Positif: ${art.sentiment?.positive || 0} | Negatif: ${art.sentiment?.negative || 0}</small>
+                                    </div>
+                                </div>
                             </div>
                         `;
                         newsContainer.appendChild(card);

@@ -96,6 +96,7 @@ class RefreshDataCommand extends Command
                                 'country_id' => $country->id,
                                 'title' => substr($item['title'], 0, 255),
                                 'description' => $item['description'],
+                                'image_url' => $item['image_url'] ?? null,
                                 'category' => $cat,
                                 'published_at' => is_string($item['published_at']) ? now()->parse($item['published_at']) : $item['published_at'],
                             ]

@@ -54,6 +54,7 @@ class NewsApiController extends ApiController
                                 'country_id' => $countryId,
                                 'title' => substr($item['title'], 0, 255),
                                 'description' => $item['description'],
+                                'image_url' => $item['image_url'] ?? null,
                                 'category' => $category,
                                 'published_at' => is_string($item['published_at']) ? now()->parse($item['published_at']) : $item['published_at'],
                             ]
@@ -89,6 +90,7 @@ class NewsApiController extends ApiController
                 'title' => $art->title,
                 'description' => $art->description,
                 'url' => $art->url,
+                'image_url' => $art->image_url,
                 'category' => $art->category,
                 'published_at' => $art->published_at->toIso8601String(),
                 'sentiment' => $art->sentimentResult ? [
