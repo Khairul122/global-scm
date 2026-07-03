@@ -17,6 +17,7 @@
 </head>
 <body class="bg-background text-foreground font-sans min-h-screen flex flex-col" x-data="{ mobileMenuOpen: false }">
 
+    @if(!request()->routeIs('login') && !request()->routeIs('register'))
     <header class="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-border">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <a href="{{ route('home') }}" class="flex items-center gap-2">
@@ -40,16 +41,19 @@
             <a href="{{ route('register') }}" class="btn-skeuo w-full">Daftar</a>
         </div>
     </header>
+    @endif
 
     <main class="flex-1 flex flex-col">
         @yield('content')
     </main>
 
+    @if(!request()->routeIs('login') && !request()->routeIs('register'))
     <footer class="border-t border-border bg-white py-6">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-muted-foreground">
             &copy; {{ date('Y') }} GlobalSCM Intel &mdash; Global Supply Chain Risk Intelligence Platform
         </div>
     </footer>
+    @endif
 
     <div id="toastRoot" class="fixed bottom-4 right-4 z-[100] flex flex-col gap-2 items-end"></div>
 
