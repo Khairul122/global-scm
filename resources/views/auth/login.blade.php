@@ -50,68 +50,69 @@
     </div>
 
     <!-- Right Form Panel (7 Columns) -->
-    <div class="lg:col-span-7 flex flex-col justify-between p-6 sm:p-10 lg:p-12 bg-[#f4f7fb]">
-        <!-- Top Navigation Bar -->
-        <div class="flex items-center justify-between w-full max-w-lg mx-auto lg:mx-0 lg:max-w-none">
-            <a href="{{ route('home') }}" class="btn-skeuo-outline !min-h-10 !py-1.5 !px-4 text-sm flex items-center gap-2">
-                <i class="fa-solid fa-arrow-left"></i> Beranda
-            </a>
-            <div class="flex items-center gap-3">
-                <span class="text-sm text-muted-foreground hidden sm:inline">Belum punya akun?</span>
-                <a href="{{ route('register') }}" class="btn-skeuo !min-h-10 !py-1.5 !px-4 text-sm">
-                    Daftar Akun
-                </a>
-            </div>
-        </div>
-
+    <div class="lg:col-span-7 flex flex-col justify-center p-6 sm:p-10 lg:p-12 bg-[#f4f7fb]">
         <!-- Centered Login Form Card -->
-        <div class="flex-1 flex items-center justify-center my-8">
-            <div class="w-full max-w-md animate-slide-up">
-                <div class="skeuo-card p-8 sm:p-10 bg-white">
-                    <div class="text-center mb-8">
-                        <div class="bg-primary/10 inline-flex p-4 rounded-full mb-3">
-                            <i class="fa-solid fa-lock text-primary text-2xl"></i>
+        <div class="w-full max-w-md mx-auto animate-slide-up my-auto">
+            <div class="skeuo-card p-8 sm:p-10 bg-white">
+                <div class="text-center mb-8">
+                    <div class="bg-primary/10 inline-flex p-4 rounded-full mb-3">
+                        <i class="fa-solid fa-lock text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-2xl text-dark">Masuk Platform</h3>
+                    <p class="text-muted-foreground text-sm mt-1">Gunakan akun Anda untuk mengakses fitur watchlist personal</p>
+                </div>
+
+                <form method="POST" action="{{ route('login') }}" class="space-y-5">
+                    @csrf
+                    <div>
+                        <label for="email" class="block text-sm font-bold text-muted-foreground mb-1.5">Alamat Email</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-muted-foreground/60 pointer-events-none">
+                                <i class="fa-solid fa-envelope"></i>
+                            </span>
+                            <input type="email" class="input-skeuo !pl-9" id="email" name="email" value="{{ old('email') }}" placeholder="admin@gmail.com" required autofocus>
                         </div>
-                        <h3 class="font-bold text-2xl text-dark">Masuk Platform</h3>
-                        <p class="text-muted-foreground text-sm mt-1">Gunakan akun Anda untuk mengakses fitur watchlist personal</p>
+                    </div>
+                    
+                    <div>
+                        <div class="flex items-center justify-between mb-1.5">
+                            <label for="password" class="block text-sm font-bold text-muted-foreground">Password</label>
+                        </div>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-muted-foreground/60 pointer-events-none">
+                                <i class="fa-solid fa-lock"></i>
+                            </span>
+                            <input type="password" class="input-skeuo !pl-9" id="password" name="password" placeholder="••••••••" required>
+                        </div>
                     </div>
 
-                    <form method="POST" action="{{ route('login') }}" class="space-y-5">
-                        @csrf
-                        <div>
-                            <label for="email" class="block text-sm font-bold text-muted-foreground mb-1.5">Alamat Email</label>
-                            <div class="relative">
-                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-muted-foreground/60 pointer-events-none">
-                                    <i class="fa-solid fa-envelope"></i>
-                                </span>
-                                <input type="email" class="input-skeuo !pl-9" id="email" name="email" value="{{ old('email') }}" placeholder="admin@gmail.com" required autofocus>
-                            </div>
+                    <div class="flex items-center justify-between pt-1">
+                        <div class="flex items-center gap-2">
+                            <input type="checkbox" class="w-4 h-4 accent-primary rounded cursor-pointer" id="remember" name="remember">
+                            <label class="text-sm text-muted-foreground cursor-pointer select-none" for="remember">Ingat Saya</label>
                         </div>
+                    </div>
+
+                    <button type="submit" class="btn-skeuo w-full !min-h-12 !text-base mt-2">
+                        Masuk <i class="fa-solid fa-arrow-right-to-bracket ml-2"></i>
+                    </button>
+
+                    <!-- Divider & Navigation Buttons integrated inside the form card -->
+                    <div class="text-center pt-4 border-t border-border mt-5 space-y-4">
+                        <p class="text-sm text-muted-foreground">
+                            Belum punya akun? 
+                            <a href="{{ route('register') }}" class="text-primary font-bold hover:underline">
+                                Daftar Sekarang
+                            </a>
+                        </p>
                         
-                        <div>
-                            <div class="flex items-center justify-between mb-1.5">
-                                <label for="password" class="block text-sm font-bold text-muted-foreground">Password</label>
-                            </div>
-                            <div class="relative">
-                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-muted-foreground/60 pointer-events-none">
-                                    <i class="fa-solid fa-lock"></i>
-                                </span>
-                                <input type="password" class="input-skeuo !pl-9" id="password" name="password" placeholder="••••••••" required>
-                            </div>
+                        <div class="pt-2">
+                            <a href="{{ route('home') }}" class="btn-skeuo-outline w-full flex items-center justify-center gap-2 !min-h-11">
+                                <i class="fa-solid fa-house"></i> Kembali ke Beranda
+                            </a>
                         </div>
-
-                        <div class="flex items-center justify-between pt-1">
-                            <div class="flex items-center gap-2">
-                                <input type="checkbox" class="w-4 h-4 accent-primary rounded cursor-pointer" id="remember" name="remember">
-                                <label class="text-sm text-muted-foreground cursor-pointer select-none" for="remember">Ingat Saya</label>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn-skeuo w-full !min-h-12 !text-base mt-2">
-                            Masuk <i class="fa-solid fa-arrow-right-to-bracket ml-2"></i>
-                        </button>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
 
