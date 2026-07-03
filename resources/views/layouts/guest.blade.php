@@ -7,6 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -126,6 +127,8 @@
                     icon: 'error',
                     confirmButtonColor: '#dc2626',
                     background: '#ffffff',
+                    showClass: { popup: 'animate__animated animate__zoomIn animate__faster' },
+                    hideClass: { popup: 'animate__animated animate__fadeOut animate__faster' },
                     customClass: {
                         popup: 'rounded-2xl border border-border shadow-2xl',
                         confirmButton: 'btn-skeuo !bg-none !bg-[var(--color-danger)] !shadow-none'
@@ -144,6 +147,8 @@
                     icon: 'success',
                     confirmButtonColor: '#0f766e',
                     background: '#ffffff',
+                    showClass: { popup: 'animate__animated animate__zoomIn animate__faster' },
+                    hideClass: { popup: 'animate__animated animate__fadeOut animate__faster' },
                     customClass: {
                         popup: 'rounded-2xl border border-border shadow-2xl',
                         confirmButton: 'btn-skeuo !bg-none !bg-[var(--color-primary)] !shadow-none'

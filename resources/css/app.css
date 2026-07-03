@@ -276,4 +276,72 @@
     }
     .spinner-sm { width: 1.1rem; height: 1.1rem; border-width: 2px; }
     @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ---------- Custom SweetAlert2 Eye-Catching Styles ---------- */
+    .swal2-popup.swal2-modal {
+        border-radius: 1.5rem !important;
+        border: 1px solid var(--color-border) !important;
+        box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.2) !important;
+        background: #ffffff !important;
+        font-family: var(--font-sans) !important;
+        padding: 2.25rem 2rem !important;
+    }
+    
+    .swal2-title {
+        font-size: 1.45rem !important;
+        font-weight: 800 !important;
+        color: var(--color-dark) !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    .swal2-html-container {
+        font-size: 0.95rem !important;
+        color: var(--color-muted-foreground) !important;
+        line-height: 1.6 !important;
+    }
+    
+    .swal2-actions {
+        gap: 0.75rem !important;
+        margin-top: 1.75rem !important;
+    }
+    
+    .swal2-styled {
+        margin: 0 !important;
+        font-weight: 700 !important;
+        font-size: 0.925rem !important;
+        min-height: 2.75rem !important;
+        border-radius: 0.75rem !important;
+        transition: all 150ms ease-out !important;
+    }
+    
+    .swal2-confirm.swal2-styled {
+        box-shadow: 0 4px 10px rgba(15, 118, 110, 0.25) !important;
+        border: none !important;
+    }
+    
+    .swal2-confirm.swal2-styled:hover {
+        transform: translateY(-1px) !important;
+        box-shadow: 0 6px 14px rgba(15, 118, 110, 0.3) !important;
+    }
+    
+    .swal2-confirm.swal2-styled:active {
+        transform: translateY(1px) !important;
+    }
+    
+    .swal2-cancel.swal2-styled {
+        background-color: var(--color-card) !important;
+        color: var(--color-muted-foreground) !important;
+        border: 1px solid var(--color-border) !important;
+        box-shadow: 4px 4px 10px rgba(15, 23, 42, 0.04) !important;
+    }
+    
+    .swal2-cancel.swal2-styled:hover {
+        background-color: var(--color-surface) !important;
+        color: var(--color-foreground) !important;
+    }
+    
+    .swal2-icon {
+        border-width: 3px !important;
+        transform: scale(0.9) !important;
+    }
 }

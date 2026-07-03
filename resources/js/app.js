@@ -34,6 +34,8 @@ window.apiFetch = async function apiFetch(url, options = {}) {
                 confirmButtonColor: '#dc2626',
                 cancelButtonColor: '#64748b',
                 background: '#ffffff',
+                showClass: { popup: 'animate__animated animate__zoomIn animate__faster' },
+                hideClass: { popup: 'animate__animated animate__fadeOut animate__faster' },
                 customClass: {
                     popup: 'rounded-2xl border border-border shadow-2xl',
                     confirmButton: 'btn-skeuo !bg-none !bg-[var(--color-danger)] !shadow-none',
@@ -56,6 +58,8 @@ window.apiFetch = async function apiFetch(url, options = {}) {
                 confirmButtonColor: '#0f766e',
                 cancelButtonColor: '#64748b',
                 background: '#ffffff',
+                showClass: { popup: 'animate__animated animate__zoomIn animate__faster' },
+                hideClass: { popup: 'animate__animated animate__fadeOut animate__faster' },
                 customClass: {
                     popup: 'rounded-2xl border border-border shadow-2xl',
                     confirmButton: 'btn-skeuo !bg-none !bg-[var(--color-primary)] !shadow-none',
@@ -100,6 +104,8 @@ window.apiFetch = async function apiFetch(url, options = {}) {
                 icon: 'success',
                 confirmButtonColor: '#0f766e',
                 background: '#ffffff',
+                showClass: { popup: 'animate__animated animate__zoomIn animate__faster' },
+                hideClass: { popup: 'animate__animated animate__fadeOut animate__faster' },
                 customClass: {
                     popup: 'rounded-2xl border border-border shadow-2xl',
                     confirmButton: 'btn-skeuo !bg-none !bg-[var(--color-primary)] !shadow-none'
@@ -121,6 +127,8 @@ window.apiFetch = async function apiFetch(url, options = {}) {
                 icon: 'error',
                 confirmButtonColor: '#dc2626',
                 background: '#ffffff',
+                showClass: { popup: 'animate__animated animate__zoomIn animate__faster' },
+                hideClass: { popup: 'animate__animated animate__fadeOut animate__faster' },
                 customClass: {
                     popup: 'rounded-2xl border border-border shadow-2xl',
                     confirmButton: 'btn-skeuo !bg-none !bg-[var(--color-danger)] !shadow-none'

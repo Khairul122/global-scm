@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -162,7 +164,7 @@
 
     <!-- Page Content -->
     <main class="lg:pl-64 pt-16 lg:pt-0 min-h-screen">
-        <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
+        <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-8 animate-slide-up">
             @yield('content')
         </div>
     </main>
@@ -194,6 +196,8 @@
                         confirmButtonColor: '#dc2626',
                         cancelButtonColor: '#64748b',
                         background: '#ffffff',
+                        showClass: { popup: 'animate__animated animate__zoomIn animate__faster' },
+                        hideClass: { popup: 'animate__animated animate__fadeOut animate__faster' },
                         customClass: {
                             popup: 'rounded-2xl border border-border shadow-2xl',
                             confirmButton: 'btn-skeuo !bg-none !bg-[var(--color-danger)] !shadow-none',
@@ -215,6 +219,8 @@
                     icon: 'success',
                     confirmButtonColor: '#0f766e',
                     background: '#ffffff',
+                    showClass: { popup: 'animate__animated animate__zoomIn animate__faster' },
+                    hideClass: { popup: 'animate__animated animate__fadeOut animate__faster' },
                     customClass: {
                         popup: 'rounded-2xl border border-border shadow-2xl',
                         confirmButton: 'btn-skeuo !bg-none !bg-[var(--color-primary)] !shadow-none'
@@ -229,6 +235,8 @@
                     icon: 'success',
                     confirmButtonColor: '#0f766e',
                     background: '#ffffff',
+                    showClass: { popup: 'animate__animated animate__zoomIn animate__faster' },
+                    hideClass: { popup: 'animate__animated animate__fadeOut animate__faster' },
                     customClass: {
                         popup: 'rounded-2xl border border-border shadow-2xl',
                         confirmButton: 'btn-skeuo !bg-none !bg-[var(--color-primary)] !shadow-none'
