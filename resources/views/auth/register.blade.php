@@ -4,53 +4,99 @@
 
 @section('content')
 <div class="grid grid-cols-1 lg:grid-cols-12 min-h-screen w-full">
-    <!-- Left Decorative Panel (5 Columns) with Interactive Network Canvas -->
-    <div class="hidden lg:flex lg:col-span-5 flex-col justify-between p-12 text-white bg-gradient-to-br from-[#0e4f4f] via-[#0f766e] to-[#042f2e] relative overflow-hidden">
-        <!-- Interactive Canvas Background -->
-        <canvas id="networkCanvas" class="absolute inset-0 w-full h-full z-0 opacity-50"></canvas>
+    <!-- Left Illustrative Panel (5 Columns) -->
+    <div class="hidden lg:flex lg:col-span-5 flex-col justify-between p-12 text-white bg-slate-950 relative overflow-hidden">
+        <!-- Technical Grid Background -->
+        <div class="absolute inset-0 bg-[linear-gradient(rgba(20,184,166,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(20,184,166,0.04)_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none z-0"></div>
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none z-0"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent/10 rounded-full blur-3xl pointer-events-none z-0"></div>
 
-        <!-- Ambient overlay for visual depth -->
-        <div class="absolute top-[-20%] left-[-20%] w-96 h-96 bg-white/5 rounded-full blur-3xl pointer-events-none z-0"></div>
-        <div class="absolute bottom-[-10%] right-[-10%] w-80 h-80 bg-black/30 rounded-full blur-3xl pointer-events-none z-0"></div>
-        
         <!-- Top branding -->
-        <a href="{{ route('home') }}" class="flex items-center gap-2 z-10">
-            <i class="fa-solid fa-earth-americas text-2xl text-white"></i>
-            <span class="font-heading font-bold text-xl tracking-wide">GlobalSCM <span class="opacity-85 text-white/90">Intel</span></span>
+        <a href="{{ route('home') }}" class="flex items-center gap-2.5 z-10">
+            <div class="bg-primary/20 p-2 rounded-xl border border-primary/30">
+                <i class="fa-solid fa-earth-americas text-xl text-teal-400"></i>
+            </div>
+            <span class="font-heading font-extrabold text-xl tracking-wide">GlobalSCM <span class="text-teal-400">Intel</span></span>
         </a>
 
-        <!-- Middle Illustrative Graphics/Copy -->
-        <div class="my-auto space-y-8 z-10 animate-slide-up">
+        <!-- Middle Rich Illustrative Dashboard Mockup -->
+        <div class="my-auto space-y-10 z-10 animate-slide-up">
             <div class="space-y-4">
-                <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-xs font-bold uppercase tracking-wider">
+                <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-400/10 border border-teal-400/20 text-teal-400 text-xs font-bold uppercase tracking-wider">
                     <i class="fa-solid fa-circle-nodes text-warning"></i> Geopolitical Connections
                 </span>
-                <h2 class="text-3xl font-extrabold leading-tight">Buat Akun Anda & Mulai Memantau</h2>
-                <p class="text-teal-50/80 text-base leading-relaxed">
-                    Daftar akun hari ini untuk mempersonalisasi daftar pantauan Anda. Amankan rute rantai pasok Anda dari risiko iklim ekstrem dan guncangan ekonomi dunia.
+                <h2 class="text-3xl font-extrabold leading-tight text-white">{{ __('Buat Akun Anda & Mulai Memantau') }}</h2>
+                <p class="text-slate-400 text-sm leading-relaxed max-w-sm">
+                    {{ __('Daftar akun hari ini untuk mempersonalisasi daftar pantauan Anda. Amankan rute rantai pasok Anda dari risiko iklim ekstrem dan guncangan ekonomi dunia.') }}
                 </p>
             </div>
 
-            <!-- Interactive indicators inside decorative panel -->
-            <div class="bg-white/10 backdrop-blur-md border border-white/20 p-5 rounded-2xl shadow-xl space-y-4">
-                <div class="flex items-center justify-between text-xs text-teal-100/80">
-                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-gauge-high text-teal-300"></i> Kecepatan Pemrosesan</span>
-                    <span class="font-bold text-teal-300">Real-time / Instant</span>
+            <!-- ILLUSTRATION: Supply Chain Risk Hub Control Room Mockup (Register Version) -->
+            <div class="relative w-full max-w-sm bg-slate-900/80 backdrop-blur-md border border-slate-800 p-6 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] space-y-6">
+                <!-- Visual Map Pathway Simulation -->
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between text-xs text-slate-400 font-bold uppercase tracking-wide">
+                        <span><i class="fa-solid fa-chart-pie text-teal-400 mr-1.5"></i> {{ __('Analisis Risiko Rata-Rata') }}</span>
+                        <span class="text-teal-400 font-mono">CALCULATING...</span>
+                    </div>
+                    <!-- Node Map Box -->
+                    <div class="h-32 bg-slate-950/60 rounded-xl relative border border-slate-800/80 p-4 flex flex-col justify-center overflow-hidden">
+                        <!-- Connecting dotted pathways -->
+                        <div class="space-y-3 z-10">
+                            <!-- Progress Bar 1 -->
+                            <div class="space-y-1">
+                                <div class="flex justify-between text-[10px] font-mono text-slate-300">
+                                    <span>{{ __('Risiko Cuaca') }} (Weather)</span>
+                                    <span class="text-teal-400">30% (LOW)</span>
+                                </div>
+                                <div class="progress-track bg-slate-850 h-2">
+                                    <div class="progress-fill bg-teal-400" style="width: 30%"></div>
+                                </div>
+                            </div>
+                            <!-- Progress Bar 2 -->
+                            <div class="space-y-1">
+                                <div class="flex justify-between text-[10px] font-mono text-slate-300">
+                                    <span>{{ __('Risiko Geopolitik') }} (News)</span>
+                                    <span class="text-amber-400">55% (MEDIUM)</span>
+                                </div>
+                                <div class="progress-track bg-slate-850 h-2">
+                                    <div class="progress-fill bg-amber-400" style="width: 55%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="flex items-center justify-between border-t border-white/10 pt-3 text-xs text-teal-100/80">
-                    <span>Keamanan Database</span>
-                    <span class="font-bold bg-white/20 px-2.5 py-0.5 rounded-full">Encrypted</span>
+
+                <!-- Secondary widgets: Risk gauge and weather -->
+                <div class="grid grid-cols-2 gap-4">
+                    <!-- Volatility Widget -->
+                    <div class="bg-slate-950/40 border border-slate-800/80 p-3 rounded-xl">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">{{ __('Kecepatan Update') }}</span>
+                            <i class="fa-solid fa-bolt text-teal-400 text-xs"></i>
+                        </div>
+                        <strong class="text-xs font-mono text-slate-100">{{ __('Instan / Real-Time') }}</strong>
+                    </div>
+
+                    <!-- Extreme Weather Widget -->
+                    <div class="bg-slate-950/40 border border-slate-800/80 p-3 rounded-xl">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">{{ __('Proteksi Data') }}</span>
+                            <i class="fa-solid fa-lock text-emerald-400 text-xs"></i>
+                        </div>
+                        <strong class="text-xs font-mono text-slate-100">Encrypted</strong>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Bottom copyright -->
-        <div class="text-xs text-teal-200/50 z-10">
-            &copy; {{ date('Y') }} GlobalSCM Intel. Hak Cipta Dilindungi.
+        <div class="text-xs text-slate-500 z-10 font-mono">
+            &copy; {{ date('Y') }} GlobalSCM Intel. Dashboard Decision-Support System v1.0.5
         </div>
     </div>
 
-    <!-- Right Form Panel (7 Columns) with Interactive States -->
+    <!-- Right Form Panel (7 Columns) -->
     <div class="lg:col-span-7 flex flex-col justify-center p-6 sm:p-10 lg:p-12 bg-[#f4f7fb]"
          x-data="{ nameFocused: false, emailFocused: false, passwordFocused: false, confirmFocused: false }">
         
@@ -64,8 +110,8 @@
                     <div class="bg-primary/10 inline-flex p-4 rounded-full mb-3">
                         <i class="fa-solid fa-user-plus text-primary text-2xl animate-[bounce_3s_infinite]"></i>
                     </div>
-                    <h3 class="font-bold text-2xl text-dark">Daftar Akun Baru</h3>
-                    <p class="text-muted-foreground text-sm mt-1">Daftarkan diri Anda untuk memantau data risiko secara personal</p>
+                    <h3 class="font-bold text-2xl text-dark">{{ __('Daftar Akun Baru') }}</h3>
+                    <p class="text-muted-foreground text-sm mt-1">{{ __('Daftarkan diri Anda untuk memantau data risiko secara personal') }}</p>
                 </div>
 
                 <form method="POST" action="{{ route('register') }}" class="space-y-4">
@@ -73,13 +119,13 @@
                     <!-- Name Field -->
                     <div class="space-y-1.5">
                         <label for="name" class="block text-sm font-bold text-muted-foreground transition-colors duration-200"
-                               :class="nameFocused ? 'text-primary' : ''">Nama Lengkap</label>
+                               :class="nameFocused ? 'text-primary' : ''">{{ __('Nama Lengkap') }}</label>
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 pl-3 flex items-center transition-colors duration-200"
                                   :class="nameFocused ? 'text-primary' : 'text-muted-foreground/60'">
                                 <i class="fa-solid fa-user"></i>
                             </span>
-                            <input type="text" class="input-skeuo !pl-9 transition-all" id="name" name="name" value="{{ old('name') }}" placeholder="Nama Lengkap Anda" required autofocus
+                            <input type="text" class="input-skeuo !pl-9 transition-all" id="name" name="name" value="{{ old('name') }}" placeholder="{{ __('Nama Lengkap Anda') }}" required autofocus
                                    @focus="nameFocused = true" @blur="nameFocused = false">
                         </div>
                     </div>
@@ -87,7 +133,7 @@
                     <!-- Email Field -->
                     <div class="space-y-1.5">
                         <label for="email" class="block text-sm font-bold text-muted-foreground transition-colors duration-200"
-                               :class="emailFocused ? 'text-primary' : ''">Alamat Email</label>
+                               :class="emailFocused ? 'text-primary' : ''">{{ __('Alamat Email') }}</label>
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 pl-3 flex items-center transition-colors duration-200"
                                   :class="emailFocused ? 'text-primary' : 'text-muted-foreground/60'">
@@ -101,7 +147,7 @@
                     <!-- Password Field -->
                     <div class="space-y-1.5">
                         <label for="password" class="block text-sm font-bold text-muted-foreground transition-colors duration-200"
-                               :class="passwordFocused ? 'text-primary' : ''">Password</label>
+                               :class="passwordFocused ? 'text-primary' : ''">{{ __('Password') }}</label>
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 pl-3 flex items-center transition-colors duration-200"
                                   :class="passwordFocused ? 'text-primary' : 'text-muted-foreground/60'">
@@ -115,13 +161,13 @@
                     <!-- Confirm Password Field -->
                     <div class="space-y-1.5">
                         <label for="password_confirmation" class="block text-sm font-bold text-muted-foreground transition-colors duration-200"
-                               :class="confirmFocused ? 'text-primary' : ''">Konfirmasi Password</label>
+                               :class="confirmFocused ? 'text-primary' : ''">{{ __('Konfirmasi Password') }}</label>
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 pl-3 flex items-center transition-colors duration-200"
                                   :class="confirmFocused ? 'text-primary' : 'text-muted-foreground/60'">
                                 <i class="fa-solid fa-shield"></i>
                             </span>
-                            <input type="password" class="input-skeuo !pl-9 transition-all" id="password_confirmation" name="password_confirmation" placeholder="Ulangi password" required
+                            <input type="password" class="input-skeuo !pl-9 transition-all" id="password_confirmation" name="password_confirmation" placeholder="{{ __('Ulangi password') }}" required
                                    @focus="confirmFocused = true" @blur="confirmFocused = false">
                         </div>
                     </div>
@@ -129,23 +175,28 @@
                     <button type="submit" class="btn-skeuo w-full !min-h-12 !text-base mt-4 relative overflow-hidden group">
                         <span class="absolute inset-0 w-full h-full bg-white/10 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></span>
                         <span class="relative z-10 flex items-center justify-center gap-2">
-                            Daftar Sekarang <i class="fa-solid fa-arrow-right-to-bracket transition-transform group-hover:translate-x-1"></i>
+                            {{ __('Daftar Sekarang') }} <i class="fa-solid fa-arrow-right-to-bracket transition-transform group-hover:translate-x-1"></i>
                         </span>
                     </button>
 
                     <!-- Divider & Navigation Buttons integrated inside the form card -->
                     <div class="text-center pt-4 border-t border-border mt-5 space-y-4">
                         <p class="text-sm text-muted-foreground">
-                            Sudah punya akun? 
+                            {{ __('Sudah punya akun?') }} 
                             <a href="{{ route('login') }}" class="text-primary font-bold hover:underline">
-                                Masuk di Sini
+                                {{ __('Masuk di Sini') }}
                             </a>
                         </p>
                         
-                        <div class="pt-2">
-                            <a href="{{ route('home') }}" class="btn-skeuo-outline w-full flex items-center justify-center gap-2 !min-h-11 hover:scale-[1.01] active:scale-95 transition-all">
-                                <i class="fa-solid fa-house"></i> Kembali ke Beranda
+                        <div class="pt-2 flex gap-2">
+                            <a href="{{ route('home') }}" class="btn-skeuo-outline flex-grow flex items-center justify-center gap-2 !min-h-11 hover:scale-[1.01] active:scale-95 transition-all">
+                                <i class="fa-solid fa-house"></i> {{ __('Kembali ke Beranda') }}
                             </a>
+                            <!-- Lang Switcher in Card -->
+                            <div class="flex items-center border border-border rounded-xl px-2 bg-surface">
+                                <a href="{{ route('lang.switch', 'id') }}" class="px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all {{ app()->getLocale() === 'id' ? 'bg-primary text-white shadow-sm' : 'text-muted-foreground hover:text-foreground' }}">ID</a>
+                                <a href="{{ route('lang.switch', 'en') }}" class="px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all {{ app()->getLocale() === 'en' ? 'bg-primary text-white shadow-sm' : 'text-muted-foreground hover:text-foreground' }}">EN</a>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -158,102 +209,4 @@
         </div>
     </div>
 </div>
-@endsection
-
-@section('scripts')
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const canvas = document.getElementById('networkCanvas');
-        if (!canvas) return;
-
-        const ctx = canvas.getContext('2d');
-        let width = canvas.width = canvas.offsetWidth;
-        let height = canvas.height = canvas.offsetHeight;
-
-        window.addEventListener('resize', () => {
-            width = canvas.width = canvas.offsetWidth;
-            height = canvas.height = canvas.offsetHeight;
-        });
-
-        const particles = [];
-        const numParticles = 45;
-
-        for (let i = 0; i < numParticles; i++) {
-            particles.push({
-                x: Math.random() * width,
-                y: Math.random() * height,
-                vx: (Math.random() - 0.5) * 0.8,
-                vy: (Math.random() - 0.5) * 0.8,
-                r: Math.random() * 2 + 1.2
-            });
-        }
-
-        let mouse = { x: null, y: null };
-        const parent = canvas.parentElement;
-
-        parent.addEventListener('mousemove', (e) => {
-            const rect = parent.getBoundingClientRect();
-            mouse.x = e.clientX - rect.left;
-            mouse.y = e.clientY - rect.top;
-        });
-
-        parent.addEventListener('mouseleave', () => {
-            mouse.x = null;
-            mouse.y = null;
-        });
-
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-
-            // Connect particles
-            for (let i = 0; i < particles.length; i++) {
-                const p1 = particles[i];
-
-                for (let j = i + 1; j < particles.length; j++) {
-                    const p2 = particles[j];
-                    const dist = Math.hypot(p1.x - p2.x, p1.y - p2.y);
-                    if (dist < 90) {
-                        ctx.strokeStyle = `rgba(20, 184, 166, ${0.15 - (dist / 90) * 0.15})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.beginPath();
-                        ctx.moveTo(p1.x, p1.y);
-                        ctx.lineTo(p2.x, p2.y);
-                        ctx.stroke();
-                    }
-                }
-
-                // Connect to mouse
-                if (mouse.x !== null) {
-                    const distMouse = Math.hypot(p1.x - mouse.x, p1.y - mouse.y);
-                    if (distMouse < 140) {
-                        ctx.strokeStyle = `rgba(20, 184, 166, ${0.4 - (distMouse / 140) * 0.4})`;
-                        ctx.lineWidth = 0.8;
-                        ctx.beginPath();
-                        ctx.moveTo(p1.x, p1.y);
-                        ctx.lineTo(mouse.x, mouse.y);
-                        ctx.stroke();
-                    }
-                }
-
-                // Move particle
-                p1.x += p1.vx;
-                p1.y += p1.vy;
-
-                // Bounce boundaries
-                if (p1.x < 0 || p1.x > width) p1.vx *= -1;
-                if (p1.y < 0 || p1.y > height) p1.vy *= -1;
-
-                // Draw node dot
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
-                ctx.beginPath();
-                ctx.arc(p1.x, p1.y, p1.r, 0, Math.PI * 2);
-                ctx.fill();
-            }
-
-            requestAnimationFrame(animate);
-        }
-
-        animate();
-    });
-</script>
 @endsection

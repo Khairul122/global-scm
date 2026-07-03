@@ -7,6 +7,13 @@ use App\Http\Controllers\Web\DashboardController;
 // Public Web Pages
 Route::get('/', [DashboardController::class, 'landing'])->name('home');
 
+Route::get('/lang/{locale}', function ($locale) {
+    if (in_array($locale, ['id', 'en'])) {
+        session()->put('locale', $locale);
+    }
+    return redirect()->back();
+})->name('lang.switch');
+
 // Authentication Views
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);

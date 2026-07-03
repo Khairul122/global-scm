@@ -26,8 +26,14 @@
             </a>
 
             <nav class="hidden md:flex items-center gap-3">
-                <a href="{{ route('login') }}" class="btn-skeuo-outline">Masuk</a>
-                <a href="{{ route('register') }}" class="btn-skeuo">Daftar</a>
+                <a href="{{ route('login') }}" class="btn-skeuo-outline">{{ __('Masuk') }}</a>
+                <a href="{{ route('register') }}" class="btn-skeuo">{{ __('Daftar') }}</a>
+
+                <!-- Lang Switcher -->
+                <div class="flex items-center gap-1 bg-surface border border-border p-1 rounded-xl ml-2">
+                    <a href="{{ route('lang.switch', 'id') }}" class="px-2.5 py-1 rounded-lg text-xs font-bold transition-all {{ app()->getLocale() === 'id' ? 'bg-primary text-white shadow-sm' : 'text-muted-foreground hover:text-foreground' }}">ID</a>
+                    <a href="{{ route('lang.switch', 'en') }}" class="px-2.5 py-1 rounded-lg text-xs font-bold transition-all {{ app()->getLocale() === 'en' ? 'bg-primary text-white shadow-sm' : 'text-muted-foreground hover:text-foreground' }}">EN</a>
+                </div>
             </nav>
 
             <button @click="mobileMenuOpen = !mobileMenuOpen" aria-label="Buka menu"
@@ -37,8 +43,15 @@
         </div>
 
         <div x-show="mobileMenuOpen" x-cloak x-transition class="md:hidden border-t border-border bg-white px-4 py-4 flex flex-col gap-3">
-            <a href="{{ route('login') }}" class="btn-skeuo-outline w-full">Masuk</a>
-            <a href="{{ route('register') }}" class="btn-skeuo w-full">Daftar</a>
+            <a href="{{ route('login') }}" class="btn-skeuo-outline w-full">{{ __('Masuk') }}</a>
+            <a href="{{ route('register') }}" class="btn-skeuo w-full">{{ __('Daftar') }}</a>
+            <div class="flex items-center justify-between border-t border-border pt-3 mt-1">
+                <span class="text-xs text-muted-foreground font-semibold">Pilih Bahasa / Language</span>
+                <div class="flex items-center gap-1 bg-surface border border-border p-1 rounded-xl">
+                    <a href="{{ route('lang.switch', 'id') }}" class="px-2.5 py-1 rounded-lg text-xs font-bold {{ app()->getLocale() === 'id' ? 'bg-primary text-white shadow-sm' : 'text-muted-foreground' }}">ID</a>
+                    <a href="{{ route('lang.switch', 'en') }}" class="px-2.5 py-1 rounded-lg text-xs font-bold {{ app()->getLocale() === 'en' ? 'bg-primary text-white shadow-sm' : 'text-muted-foreground' }}">EN</a>
+                </div>
+            </div>
         </div>
     </header>
     @endif
