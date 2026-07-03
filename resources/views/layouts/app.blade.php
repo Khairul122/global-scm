@@ -5,189 +5,170 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Global Supply Chain Risk Platform')</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- FontAwesome Icons -->
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" rel="stylesheet">
-    
+
     <!-- Leaflet.js CSS (Maps) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
-    
+
     <!-- Leaflet MarkerCluster CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
 
-    <!-- App Styles -->
-    @vite(['resources/css/app.css'])
+    <!-- App Styles / Scripts (Tailwind CSS 4 + Alpine.js via Vite) -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @yield('styles')
 </head>
-<body>
+<body class="bg-background text-foreground font-sans" x-data="{ drawerOpen: false }">
 
-    <!-- Navigation Header -->
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="{{ route('home') }}">
-                <i class="fa-solid fa-earth-americas me-2 text-primary fs-4"></i>
-                <span class="fw-bold tracking-wide">GlobalSCM <span class="text-primary">Intel</span></span>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link {{ Request::is('dashboard') ? 'active text-primary' : '' }}" href="{{ route('dashboard') }}">
-                            <i class="fa-solid fa-chart-column me-1"></i> Dashboard
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ Request::is('weather') ? 'active text-primary' : '' }}" href="/weather">
-                            <i class="fa-solid fa-cloud-sun-rain me-1"></i> Cuaca
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ Request::is('currency') ? 'active text-primary' : '' }}" href="/currency">
-                            <i class="fa-solid fa-money-bill-transfer me-1"></i> Valuta
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ Request::is('ports') ? 'active text-primary' : '' }}" href="/ports">
-                            <i class="fa-solid fa-ship me-1"></i> Pelabuhan
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ Request::is('news') ? 'active text-primary' : '' }}" href="/news">
-                            <i class="fa-solid fa-newspaper me-1"></i> Berita
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ Request::is('analytics') ? 'active text-primary' : '' }}" href="/analytics">
-                            <i class="fa-solid fa-chart-line me-1"></i> Analitik
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ Request::is('compare') ? 'active text-primary' : '' }}" href="/compare">
-                            <i class="fa-solid fa-scale-balanced me-1"></i> Komparasi
-                        </a>
-                    </li>
-                    @auth
-                    <li class="nav-item">
-                        <a class="nav-link {{ Request::is('watchlist') ? 'active text-primary' : '' }}" href="{{ route('watchlist') }}">
-                            <i class="fa-solid fa-star me-1 text-warning"></i> Watchlist
-                        </a>
-                    </li>
-                    @if(Auth::user()->role === 'admin')
-                    <li class="nav-item">
-                        <a class="nav-link {{ Request::is('admin') ? 'active text-primary' : '' }}" href="{{ route('admin') }}">
-                            <i class="fa-solid fa-user-shield me-1"></i> Admin
-                        </a>
-                    </li>
-                    @endif
-                    @endauth
-                </ul>
-                <div class="d-flex align-items-center">
-                    @auth
-                    <div class="dropdown">
-                        <button class="btn btn-outline-light dropdown-toggle px-3 py-1.5 glass-card" type="button" id="userMenu" data-bs-toggle="dropdown">
-                            <i class="fa-solid fa-user-circle me-1 text-primary"></i> {{ Auth::user()->name }}
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end border-secondary p-1">
-                            <li class="p-2 border-bottom border-secondary mb-1">
-                                <small class="text-secondary d-block">Role</small>
-                                <span class="badge {{ Auth::user()->role === 'admin' ? 'bg-danger' : 'bg-primary' }}">{{ strtoupper(Auth::user()->role) }}</span>
-                            </li>
-                            <li>
-                                <form action="{{ route('logout') }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="dropdown-item text-danger py-2">
-                                        <i class="fa-solid fa-right-from-bracket me-1"></i> Keluar
-                                    </button>
-                                </form>
-                            </li>
-                        </ul>
+    @php
+        $navLinks = [
+            ['route' => 'dashboard', 'path' => 'dashboard', 'icon' => 'fa-chart-column', 'label' => 'Dashboard'],
+            ['url' => '/weather', 'path' => 'weather', 'icon' => 'fa-cloud-sun-rain', 'label' => 'Cuaca'],
+            ['url' => '/currency', 'path' => 'currency', 'icon' => 'fa-money-bill-transfer', 'label' => 'Valuta'],
+            ['url' => '/ports', 'path' => 'ports', 'icon' => 'fa-ship', 'label' => 'Pelabuhan'],
+            ['url' => '/news', 'path' => 'news', 'icon' => 'fa-newspaper', 'label' => 'Berita'],
+            ['url' => '/analytics', 'path' => 'analytics', 'icon' => 'fa-chart-line', 'label' => 'Analitik'],
+            ['url' => '/compare', 'path' => 'compare', 'icon' => 'fa-scale-balanced', 'label' => 'Komparasi'],
+            ['route' => 'watchlist', 'path' => 'watchlist', 'icon' => 'fa-star', 'label' => 'Watchlist'],
+        ];
+    @endphp
+
+    <!-- Desktop sidebar (>=1024px) -->
+    <aside class="hidden lg:flex lg:flex-col fixed inset-y-0 left-0 w-64 bg-white border-r border-border z-30">
+        <a href="{{ route('home') }}" class="flex items-center gap-2 px-6 h-16 border-b border-border shrink-0">
+            <i class="fa-solid fa-earth-americas text-primary text-xl"></i>
+            <span class="font-heading font-bold tracking-wide">GlobalSCM <span class="text-primary">Intel</span></span>
+        </a>
+
+        <nav class="flex-1 overflow-y-auto py-4 px-3 space-y-1">
+            @foreach($navLinks as $link)
+                @php $active = Request::is($link['path']); @endphp
+                <a href="{{ isset($link['route']) ? route($link['route']) : $link['url'] }}"
+                   class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors duration-150
+                          {{ $active ? 'bg-primary/10 text-primary border-l-2 border-primary' : 'text-muted-foreground hover:text-foreground hover:bg-muted border-l-2 border-transparent' }}">
+                    <i class="fa-solid {{ $link['icon'] }} w-4 text-center {{ $link['icon'] === 'fa-star' ? 'text-warning' : '' }}"></i>
+                    <span>{{ $link['label'] }}</span>
+                </a>
+            @endforeach
+
+            @if(Auth::user()->role === 'admin')
+                <a href="{{ route('admin') }}"
+                   class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors duration-150
+                          {{ Request::is('admin') ? 'bg-primary/10 text-primary border-l-2 border-primary' : 'text-muted-foreground hover:text-foreground hover:bg-muted border-l-2 border-transparent' }}">
+                    <i class="fa-solid fa-user-shield w-4 text-center"></i>
+                    <span>Admin</span>
+                </a>
+            @endif
+        </nav>
+
+        <div class="p-3 border-t border-border shrink-0">
+            <div x-data="{ open: false }" class="relative">
+                <button @click="open = !open" @click.outside="open = false"
+                        class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors duration-150 min-h-11">
+                    <i class="fa-solid fa-user-circle text-primary text-xl"></i>
+                    <div class="flex-1 text-left overflow-hidden">
+                        <p class="text-sm font-semibold truncate">{{ Auth::user()->name }}</p>
+                        <span class="inline-block px-2 py-0.5 rounded-full text-[10px] font-bold {{ Auth::user()->role === 'admin' ? 'bg-danger text-white' : 'bg-primary text-white' }}">{{ strtoupper(Auth::user()->role) }}</span>
                     </div>
-                    @else
-                    <a href="{{ route('login') }}" class="btn btn-outline-light me-2 border-secondary">Masuk</a>
-                    <a href="{{ route('register') }}" class="btn btn-primary">Daftar</a>
-                    @endauth
+                    <i class="fa-solid fa-chevron-up text-xs text-muted-foreground transition-transform" :class="open ? 'rotate-180' : ''"></i>
+                </button>
+                <div x-show="open" x-cloak x-transition.origin.bottom
+                     class="absolute bottom-full left-0 right-0 mb-2 skeuo-card p-1">
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-danger hover:bg-danger/10 text-sm font-medium min-h-11">
+                            <i class="fa-solid fa-right-from-bracket"></i> Keluar
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
-    </nav>
+    </aside>
 
-    <!-- Page Content Container -->
-    <div class="container" style="margin-top: 90px; margin-bottom: 50px;">
-        @yield('content')
-    </div>
+    <!-- Mobile top bar (<1024px) -->
+    <header class="lg:hidden fixed top-0 inset-x-0 h-16 bg-white/95 backdrop-blur-md border-b border-border z-30 flex items-center justify-between px-4">
+        <a href="{{ route('home') }}" class="flex items-center gap-2">
+            <i class="fa-solid fa-earth-americas text-primary text-lg"></i>
+            <span class="font-heading font-bold text-sm">GlobalSCM <span class="text-primary">Intel</span></span>
+        </a>
+        <button @click="drawerOpen = true" aria-label="Buka menu navigasi"
+                class="flex items-center justify-center w-11 h-11 rounded-xl hover:bg-muted text-foreground">
+            <i class="fa-solid fa-bars text-lg"></i>
+        </button>
+    </header>
 
-    <!-- Toast Notification Container -->
-    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1055;">
-        <div id="globalToast" class="toast align-items-center text-white bg-dark border-0" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="d-flex">
-                <div class="toast-body">
-                    <span id="toastMessage">Pesan</span>
+    <!-- Mobile drawer -->
+    <div x-show="drawerOpen" x-cloak x-transition.opacity class="lg:hidden fixed inset-0 bg-black/50 z-40" @click="drawerOpen = false"></div>
+    <div x-show="drawerOpen" x-cloak
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="-translate-x-full"
+         x-transition:enter-end="translate-x-0"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="translate-x-0"
+         x-transition:leave-end="-translate-x-full"
+         class="lg:hidden fixed inset-y-0 left-0 w-[85%] max-w-sm bg-white z-50 flex flex-col overflow-y-auto">
+        <div class="flex items-center justify-between h-16 px-4 border-b border-border shrink-0">
+            <span class="font-heading font-bold">Menu Navigasi</span>
+            <button @click="drawerOpen = false" aria-label="Tutup menu" class="w-11 h-11 flex items-center justify-center rounded-xl hover:bg-muted">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+
+        <nav class="flex-1 py-4 px-3 space-y-1">
+            @foreach($navLinks as $link)
+                @php $active = Request::is($link['path']); @endphp
+                <a href="{{ isset($link['route']) ? route($link['route']) : $link['url'] }}"
+                   class="flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium min-h-11
+                          {{ $active ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:text-foreground hover:bg-muted' }}">
+                    <i class="fa-solid {{ $link['icon'] }} w-4 text-center {{ $link['icon'] === 'fa-star' ? 'text-warning' : '' }}"></i>
+                    <span>{{ $link['label'] }}</span>
+                </a>
+            @endforeach
+
+            @if(Auth::user()->role === 'admin')
+                <a href="{{ route('admin') }}"
+                   class="flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium min-h-11
+                          {{ Request::is('admin') ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:text-foreground hover:bg-muted' }}">
+                    <i class="fa-solid fa-user-shield w-4 text-center"></i>
+                    <span>Admin</span>
+                </a>
+            @endif
+        </nav>
+
+        <div class="p-3 border-t border-border shrink-0">
+            <div class="flex items-center gap-3 px-3 py-2 mb-2">
+                <i class="fa-solid fa-user-circle text-primary text-xl"></i>
+                <div class="flex-1 overflow-hidden">
+                    <p class="text-sm font-semibold truncate">{{ Auth::user()->name }}</p>
+                    <span class="inline-block px-2 py-0.5 rounded-full text-[10px] font-bold {{ Auth::user()->role === 'admin' ? 'bg-danger text-white' : 'bg-primary text-white' }}">{{ strtoupper(Auth::user()->role) }}</span>
                 </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
             </div>
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="w-full flex items-center gap-2 px-3 py-3 rounded-xl text-danger hover:bg-danger/10 text-sm font-medium min-h-11">
+                    <i class="fa-solid fa-right-from-bracket"></i> Keluar
+                </button>
+            </form>
         </div>
     </div>
 
-    <!-- Scripts (Bootstrap Bundle, ChartJS, Leaflet) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+    <!-- Page Content -->
+    <main class="lg:pl-64 pt-16 lg:pt-0 min-h-screen">
+        <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
+            @yield('content')
+        </div>
+    </main>
+
+    <!-- Toast Notification Root -->
+    <div id="toastRoot" class="fixed bottom-4 right-4 z-[100] flex flex-col gap-2 items-end"></div>
+
+    <!-- Leaflet / Chart.js (libraries retained as-is per requirements) -->
     <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-
-    <!-- Global Javascript Utilities -->
-    <script>
-        // Setup CSRF headers for fetch/ajax calls
-        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-        // Toast show helper
-        const toastEl = document.getElementById('globalToast');
-        const toast = new bootstrap.Toast(toastEl);
-        
-        function showToast(message, type = 'success') {
-            document.getElementById('toastMessage').innerText = message;
-            toastEl.className = 'toast align-items-center text-white border-0';
-            if (type === 'success') {
-                toastEl.classList.add('bg-success');
-            } else if (type === 'danger' || type === 'error') {
-                toastEl.classList.add('bg-danger');
-            } else {
-                toastEl.classList.add('bg-warning', 'text-dark');
-            }
-            toast.show();
-        }
-
-        // Global ajax fetcher with auto JSON parsing and error handling
-        async function apiFetch(url, options = {}) {
-            options.headers = options.headers || {};
-            options.headers['X-CSRF-TOKEN'] = csrfToken;
-            options.headers['Accept'] = 'application/json';
-            
-            if (options.body && !(options.body instanceof FormData) && typeof options.body === 'object') {
-                options.headers['Content-Type'] = 'application/json';
-                options.body = JSON.stringify(options.body);
-            }
-
-            try {
-                const response = await fetch(url, options);
-                const result = await response.json();
-                
-                if (!response.ok) {
-                    throw new Error(result.error?.message || result.message || 'Kesalahan Server Internal');
-                }
-                return result;
-            } catch (err) {
-                console.error("API error fetching " + url + ":", err);
-                throw err;
-            }
-        }
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
 
     @yield('scripts')
 </body>

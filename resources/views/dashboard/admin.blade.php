@@ -3,164 +3,135 @@
 @section('title', 'Admin Dashboard - Global SCM Risk Intel')
 
 @section('content')
-<div class="row mb-4">
-    <div class="col-12">
-        <h2 class="fw-bold">Panel Kontrol Administrator</h2>
-        <p class="text-secondary">Kelola pengguna, dataset pelabuhan (WPI), leksikon kata sentimen, artikel analisis internal, dan pembobotan skor risiko.</p>
-    </div>
+<div class="mb-6">
+    <h2 class="text-2xl font-bold">Panel Kontrol Administrator</h2>
+    <p class="text-muted-foreground">Kelola pengguna, dataset pelabuhan (WPI), leksikon kata sentimen, dan pembobotan skor risiko.</p>
 </div>
 
-<div class="row">
-    <div class="col-12">
-        <!-- Tab Navigation -->
-        <ul class="nav nav-tabs border-secondary mb-4" id="adminTab" role="tablist">
-            <li class="nav-item">
-                <button class="nav-link active text-white" id="users-tab" data-bs-toggle="tab" data-bs-target="#users-panel" type="button"><i class="fa-solid fa-users me-1 text-primary"></i> Pengguna</button>
-            </li>
-            <li class="nav-item">
-                <button class="nav-link text-white" id="ports-tab" data-bs-toggle="tab" data-bs-target="#ports-panel" type="button"><i class="fa-solid fa-anchor me-1 text-primary"></i> Pelabuhan (CSV)</button>
-            </li>
-            <li class="nav-item">
-                <button class="nav-link text-white" id="weights-tab" data-bs-toggle="tab" data-bs-target="#weights-panel" type="button"><i class="fa-solid fa-scale-unbalanced me-1 text-primary"></i> Bobot Risiko</button>
-            </li>
-            <li class="nav-item">
-                <button class="nav-link text-white" id="lexicon-tab" data-bs-toggle="tab" data-bs-target="#lexicon-panel" type="button"><i class="fa-solid fa-book-open me-1 text-primary"></i> Leksikon Sentimen</button>
-            </li>
-        </ul>
+<div x-data="{ tab: 'users' }">
+    <!-- Tab Navigation -->
+    <div class="flex flex-wrap gap-2 border-b border-border mb-6" role="tablist">
+        <button @click="tab = 'users'" :class="tab === 'users' ? 'bg-primary/10 text-primary border-primary' : 'text-muted-foreground hover:text-foreground border-transparent'" class="px-4 py-2.5 rounded-t-xl text-sm font-medium min-h-11 border-b-2 transition-colors duration-150"><i class="fa-solid fa-users mr-1"></i> Pengguna</button>
+        <button @click="tab = 'ports'" :class="tab === 'ports' ? 'bg-primary/10 text-primary border-primary' : 'text-muted-foreground hover:text-foreground border-transparent'" class="px-4 py-2.5 rounded-t-xl text-sm font-medium min-h-11 border-b-2 transition-colors duration-150"><i class="fa-solid fa-anchor mr-1"></i> Pelabuhan (CSV)</button>
+        <button @click="tab = 'weights'" :class="tab === 'weights' ? 'bg-primary/10 text-primary border-primary' : 'text-muted-foreground hover:text-foreground border-transparent'" class="px-4 py-2.5 rounded-t-xl text-sm font-medium min-h-11 border-b-2 transition-colors duration-150"><i class="fa-solid fa-scale-unbalanced mr-1"></i> Bobot Risiko</button>
+        <button @click="tab = 'lexicon'" :class="tab === 'lexicon' ? 'bg-primary/10 text-primary border-primary' : 'text-muted-foreground hover:text-foreground border-transparent'" class="px-4 py-2.5 rounded-t-xl text-sm font-medium min-h-11 border-b-2 transition-colors duration-150"><i class="fa-solid fa-book-open mr-1"></i> Leksikon Sentimen</button>
+    </div>
 
-        <!-- Tab Contents -->
-        <div class="tab-content" id="adminTabContent">
-            <!-- 1. Users Panel -->
-            <div class="tab-pane fade show active" id="users-panel">
-                <div class="glass-card p-4">
-                    <h5 class="fw-bold mb-3">Daftar Pengguna</h5>
-                    <div class="table-responsive">
-                        <table class="table table-dark table-hover mb-0 align-middle">
-                            <thead>
-                                <tr class="text-secondary border-secondary">
-                                    <th>Nama</th>
-                                    <th>Email</th>
-                                    <th>Role</th>
-                                    <th>Status</th>
-                                    <th class="text-end">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody id="adminUsersBody">
-                                <tr><td colspan="5" class="text-center text-secondary py-4">Memuat data pengguna...</td></tr>
-                            </tbody>
-                        </table>
+    <!-- 1. Users Panel -->
+    <div x-show="tab === 'users'" x-cloak x-transition.opacity>
+        <div class="skeuo-card p-5">
+            <h5 class="font-bold mb-4">Daftar Pengguna</h5>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="text-left text-muted-foreground uppercase text-xs tracking-wide border-b border-border">
+                            <th class="py-2.5 pr-3">Nama</th>
+                            <th class="py-2.5 pr-3">Email</th>
+                            <th class="py-2.5 pr-3">Role</th>
+                            <th class="py-2.5 pr-3">Status</th>
+                            <th class="py-2.5 text-right">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminUsersBody">
+                        <tr><td colspan="5" class="text-center text-muted-foreground py-6">Memuat data pengguna...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Ports CSV Importer Panel -->
+    <div x-show="tab === 'ports'" x-cloak x-transition.opacity>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="skeuo-card p-5">
+                <h5 class="font-bold mb-3"><i class="fa-solid fa-file-csv mr-1 text-primary"></i> Impor Dataset World Port Index</h5>
+                <p class="text-sm text-muted-foreground mb-4">Unggah berkas CSV untuk memperbarui basis data pelabuhan global secara massal. Ukuran maksimal file adalah 5MB.</p>
+
+                <form id="portsImportForm" class="space-y-4">
+                    <div>
+                        <label for="csvFile" class="block text-sm font-semibold text-muted-foreground mb-1.5">Pilih Berkas CSV</label>
+                        <input type="file" id="csvFile" class="input-skeuo" accept=".csv" required>
                     </div>
+                    <button type="submit" class="btn-skeuo w-full">Unggah &amp; Proses Impor</button>
+                </form>
+
+                <div id="importLoading" class="hidden text-center py-3 mt-2">
+                    <div class="spinner spinner-sm text-primary inline-block mr-2"></div>
+                    <span class="text-sm text-muted-foreground">Memproses data... Harap tunggu</span>
                 </div>
             </div>
-
-            <!-- 2. Ports CSV Importer Panel -->
-            <div class="tab-pane fade" id="ports-panel">
-                <div class="row g-4">
-                    <div class="col-lg-5">
-                        <div class="glass-card p-4">
-                            <h5 class="fw-bold mb-3"><i class="fa-solid fa-file-csv me-1 text-primary"></i> Impor Dataset World Port Index</h5>
-                            <p class="small text-secondary mb-3">Unggah berkas CSV untuk memperbarui basis data pelabuhan global secara massal. Ukuran maksimal file adalah 5MB.</p>
-                            
-                            <form id="portsImportForm">
-                                <div class="mb-3">
-                                    <label for="csvFile" class="form-label text-secondary small fw-semibold">Pilih Berkas CSV</label>
-                                    <input type="file" id="csvFile" class="form-control bg-dark border-secondary text-white" accept=".csv" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary w-100 rounded-3 py-2 fw-semibold">Unggah & Proses Impor</button>
-                            </form>
-
-                            <div id="importLoading" class="text-center py-3" style="display: none;">
-                                <div class="spinner-border text-primary spinner-border-sm me-2"></div>
-                                <span class="small text-secondary">Memproses data... Harap tunggu</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-7">
-                        <div class="glass-card p-4">
-                            <h5 class="fw-bold mb-3">Laporan Hasil Impor</h5>
-                            <div id="importReport" class="text-secondary small" style="max-height: 250px; overflow-y: auto;">
-                                <p class="mb-0">Belum ada aktivitas impor di sesi ini.</p>
-                            </div>
-                        </div>
-                    </div>
+            <div class="skeuo-card p-5">
+                <h5 class="font-bold mb-3">Laporan Hasil Impor</h5>
+                <div id="importReport" class="text-sm text-muted-foreground max-h-64 overflow-y-auto">
+                    <p>Belum ada aktivitas impor di sesi ini.</p>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <!-- 3. Weights Panel -->
-            <div class="tab-pane fade" id="weights-panel">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="glass-card p-4">
-                            <h5 class="fw-bold mb-3">Sesuaikan Bobot Skor Risiko</h5>
-                            <p class="small text-secondary mb-4">Total penjumlahan seluruh bobot komponen harus bernilai tepat **1.00** agar kalkulasi skor valid.</p>
-                            
-                            <form id="weightsForm">
-                                <div class="mb-3">
-                                    <label class="form-label text-secondary small fw-semibold">Bobot Cuaca (Weather Risk)</label>
-                                    <input type="number" step="0.01" min="0" max="1" class="form-control bg-dark border-secondary text-white" id="wWeather" value="{{ $weights['weather'] ?? 0.30 }}" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label text-secondary small fw-semibold">Bobot Sentimen Berita (Political News Risk)</label>
-                                    <input type="number" step="0.01" min="0" max="1" class="form-control bg-dark border-secondary text-white" id="wNews" value="{{ $weights['news'] ?? 0.40 }}" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label text-secondary small fw-semibold">Bobot Inflasi (Inflation Risk)</label>
-                                    <input type="number" step="0.01" min="0" max="1" class="form-control bg-dark border-secondary text-white" id="wInflation" value="{{ $weights['inflation'] ?? 0.20 }}" required>
-                                </div>
-                                <div class="mb-4">
-                                    <label class="form-label text-secondary small fw-semibold">Bobot Nilai Kurs (Currency Risk)</label>
-                                    <input type="number" step="0.01" min="0" max="1" class="form-control bg-dark border-secondary text-white" id="wCurrency" value="{{ $weights['currency'] ?? 0.10 }}" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary w-100 rounded-3 py-2 fw-semibold">Simpan Bobot Baru</button>
-                            </form>
-                        </div>
+    <!-- 3. Weights Panel -->
+    <div x-show="tab === 'weights'" x-cloak x-transition.opacity>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="skeuo-card p-5">
+                <h5 class="font-bold mb-3">Sesuaikan Bobot Skor Risiko</h5>
+                <p class="text-sm text-muted-foreground mb-4">Total penjumlahan seluruh bobot komponen harus bernilai tepat <strong>1.00</strong> agar kalkulasi skor valid.</p>
+
+                <form id="weightsForm" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-muted-foreground mb-1.5">Bobot Cuaca (Weather Risk)</label>
+                        <input type="number" step="0.01" min="0" max="1" class="input-skeuo" id="wWeather" value="{{ $weights['weather'] ?? 0.30 }}" required>
                     </div>
-                </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-muted-foreground mb-1.5">Bobot Sentimen Berita (Political News Risk)</label>
+                        <input type="number" step="0.01" min="0" max="1" class="input-skeuo" id="wNews" value="{{ $weights['news'] ?? 0.40 }}" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-muted-foreground mb-1.5">Bobot Inflasi (Inflation Risk)</label>
+                        <input type="number" step="0.01" min="0" max="1" class="input-skeuo" id="wInflation" value="{{ $weights['inflation'] ?? 0.20 }}" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-muted-foreground mb-1.5">Bobot Nilai Kurs (Currency Risk)</label>
+                        <input type="number" step="0.01" min="0" max="1" class="input-skeuo" id="wCurrency" value="{{ $weights['currency'] ?? 0.10 }}" required>
+                    </div>
+                    <button type="submit" class="btn-skeuo w-full">Simpan Bobot Baru</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. Lexicon Panel -->
+    <div x-show="tab === 'lexicon'" x-cloak x-transition.opacity>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Form Tambah Kata -->
+            <div class="skeuo-card p-5">
+                <h5 class="font-bold mb-3">Tambah Kata Leksikon</h5>
+                <form id="lexiconForm" class="space-y-4">
+                    <div>
+                        <label for="lexType" class="block text-sm font-semibold text-muted-foreground mb-1.5">Jenis Kata</label>
+                        <select id="lexType" class="input-skeuo" required>
+                            <option value="positive">Positif</option>
+                            <option value="negative">Negatif</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="lexWord" class="block text-sm font-semibold text-muted-foreground mb-1.5">Kata (Bahasa Inggris)</label>
+                        <input type="text" id="lexWord" class="input-skeuo" placeholder="Contoh: delay, boom" required>
+                    </div>
+                    <button type="submit" class="btn-skeuo w-full">Tambah Kata</button>
+                </form>
             </div>
 
-            <!-- 4. Lexicon Panel -->
-            <div class="tab-pane fade" id="lexicon-panel">
-                <div class="row g-4">
-                    <!-- Form Tambah Kata -->
-                    <div class="col-lg-4">
-                        <div class="glass-card p-4">
-                            <h5 class="fw-bold mb-3">Tambah Kata Leksikon</h5>
-                            <form id="lexiconForm">
-                                <div class="mb-3">
-                                    <label for="lexType" class="form-label text-secondary small fw-semibold">Jenis Kata</label>
-                                    <select id="lexType" class="form-select bg-dark border-secondary text-white" required>
-                                        <option value="positive">Positif</option>
-                                        <option value="negative">Negatif</option>
-                                    </select>
-                                </div>
-                                <div class="mb-4">
-                                    <label for="lexWord" class="form-label text-secondary small fw-semibold">Kata (Bahasa Inggris)</label>
-                                    <input type="text" id="lexWord" class="form-control bg-dark border-secondary text-white" placeholder="Contoh: delay, boom" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary w-100 rounded-3 py-2 fw-semibold">Tambah Kata</button>
-                            </form>
-                        </div>
+            <!-- List Leksikon -->
+            <div class="skeuo-card p-5 lg:col-span-2">
+                <h5 class="font-bold mb-4">Kamus Kata Saat Ini</h5>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <h6 class="text-success font-bold border-b border-success/30 pb-2 mb-3">Positif</h6>
+                        <div id="posLexList" class="flex flex-wrap gap-2 max-h-64 overflow-y-auto"></div>
                     </div>
-
-                    <!-- List Leksikon -->
-                    <div class="col-lg-8">
-                        <div class="glass-card p-4">
-                            <h5 class="fw-bold mb-3">Kamus Kata Saat Ini</h5>
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <h6 class="text-success fw-bold border-bottom border-success pb-2">Positif</h6>
-                                    <div id="posLexList" class="d-flex flex-wrap gap-2" style="max-height: 250px; overflow-y: auto;">
-                                        <!-- loaded via ajax -->
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <h6 class="text-danger fw-bold border-bottom border-danger pb-2">Negatif</h6>
-                                    <div id="negLexList" class="d-flex flex-wrap gap-2" style="max-height: 250px; overflow-y: auto;">
-                                        <!-- loaded via ajax -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div>
+                        <h6 class="text-danger font-bold border-b border-danger/30 pb-2 mb-3">Negatif</h6>
+                        <div id="negLexList" class="flex flex-wrap gap-2 max-h-64 overflow-y-auto"></div>
                     </div>
                 </div>
             </div>
@@ -174,8 +145,7 @@
     window.addEventListener('DOMContentLoaded', () => {
         loadUsers();
         loadLexicon();
-        
-        // Form listeners
+
         document.getElementById('weightsForm').addEventListener('submit', handleWeightsUpdate);
         document.getElementById('lexiconForm').addEventListener('submit', handleLexiconStore);
         document.getElementById('portsImportForm').addEventListener('submit', handlePortsImport);
@@ -190,21 +160,21 @@
                 tbody.innerHTML = '';
                 res.data.data.forEach(user => {
                     const row = document.createElement('tr');
-                    row.className = 'border-secondary';
+                    row.className = 'border-t border-border';
                     row.innerHTML = `
-                        <td>${user.name}</td>
-                        <td class="small text-secondary">${user.email}</td>
-                        <td>
-                            <select onchange="updateUserRole(${user.id}, this.value)" class="form-select form-select-sm bg-dark border-secondary text-white py-1">
+                        <td class="py-2.5 pr-3">${user.name}</td>
+                        <td class="py-2.5 pr-3 text-sm text-muted-foreground">${user.email}</td>
+                        <td class="py-2.5 pr-3">
+                            <select onchange="updateUserRole(${user.id}, this.value)" class="input-skeuo !min-h-9 !py-1 text-sm">
                                 <option value="user" ${user.role === 'user' ? 'selected' : ''}>User</option>
                                 <option value="admin" ${user.role === 'admin' ? 'selected' : ''}>Admin</option>
                             </select>
                         </td>
-                        <td>
-                            <span class="badge ${user.is_active ? 'bg-success' : 'bg-danger'}">${user.is_active ? 'Aktif' : 'Nonaktif'}</span>
+                        <td class="py-2.5 pr-3">
+                            <span class="inline-flex px-2.5 py-1 rounded-full text-xs font-bold ${user.is_active ? 'bg-success/10 text-success' : 'bg-danger/10 text-danger'}">${user.is_active ? 'Aktif' : 'Nonaktif'}</span>
                         </td>
-                        <td class="text-end">
-                            <button onclick="toggleUserStatus(${user.id}, ${user.is_active})" class="btn ${user.is_active ? 'btn-outline-danger' : 'btn-outline-success'} btn-sm rounded-3">
+                        <td class="py-2.5 text-right">
+                            <button onclick="toggleUserStatus(${user.id}, ${user.is_active})" class="btn-skeuo-outline !min-h-9 !py-1 text-sm ${user.is_active ? 'btn-skeuo-danger' : ''}">
                                 ${user.is_active ? 'Nonaktifkan' : 'Aktifkan'}
                             </button>
                         </td>
@@ -213,7 +183,7 @@
                 });
             }
         } catch (err) {
-            tbody.innerHTML = `<tr><td colspan="5" class="text-center text-danger">${err.message || 'Gagal memuat pengguna.'}</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="5" class="text-center text-danger py-6">${err.message || 'Gagal memuat pengguna.'}</td></tr>`;
         }
     }
 
@@ -258,7 +228,7 @@
         const formData = new FormData();
         formData.append('file', file);
 
-        document.getElementById('importLoading').style.display = 'block';
+        document.getElementById('importLoading').classList.remove('hidden');
         const report = document.getElementById('importReport');
         report.innerHTML = '<p class="text-info">Sedang memproses file CSV...</p>';
 
@@ -267,14 +237,14 @@
                 method: 'POST',
                 body: formData
             });
-            
-            document.getElementById('importLoading').style.display = 'none';
+
+            document.getElementById('importLoading').classList.add('hidden');
             if (res.success) {
                 showToast(res.meta?.message || 'Impor data selesai.');
-                
+
                 let detailsHtml = '';
                 if (res.data.details.length > 0) {
-                    detailsHtml = '<h6 class="text-warning mt-3 mb-1">Rincian Baris Gagal:</h6><ul class="text-danger ps-3">';
+                    detailsHtml = '<h6 class="text-warning mt-3 mb-1 font-semibold">Rincian Baris Gagal:</h6><ul class="text-danger pl-4 list-disc">';
                     res.data.details.forEach(d => {
                         detailsHtml += `<li>${d}</li>`;
                     });
@@ -282,7 +252,7 @@
                 }
 
                 report.innerHTML = `
-                    <div class="alert alert-success border-0 bg-success bg-opacity-10 text-success p-3 mb-0">
+                    <div class="bg-success/10 text-success border border-success/25 rounded-xl p-3">
                         <strong>Impor Sukses!</strong><br>
                         - Berhasil diimpor: ${res.data.imported} pelabuhan<br>
                         - Gagal / Dilewati: ${res.data.failed} baris
@@ -292,8 +262,8 @@
                 fileInput.value = '';
             }
         } catch (err) {
-            document.getElementById('importLoading').style.display = 'none';
-            report.innerHTML = `<div class="alert alert-danger border-0 bg-danger bg-opacity-10 text-danger p-3 mb-0"><strong>Gagal Impor:</strong><br>${err.message}</div>`;
+            document.getElementById('importLoading').classList.add('hidden');
+            report.innerHTML = `<div class="bg-danger/10 text-danger border border-danger/25 rounded-xl p-3"><strong>Gagal Impor:</strong><br>${err.message}</div>`;
             showToast(err.message || 'Gagal memproses file.', 'error');
         }
     }
@@ -359,10 +329,10 @@
 
     function createLexiconBadge(id, word, type) {
         const badge = document.createElement('span');
-        badge.className = `badge ${type === 'positive' ? 'bg-success bg-opacity-10 text-success border border-success' : 'bg-danger bg-opacity-10 text-danger border border-danger'} p-2 d-flex align-items-center`;
+        badge.className = `inline-flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-sm ${type === 'positive' ? 'bg-success/10 text-success border border-success/30' : 'bg-danger/10 text-danger border border-danger/30'}`;
         badge.innerHTML = `
             ${word}
-            <i onclick="deleteLexicon(${id}, '${type}')" class="fa-solid fa-xmark ms-2 cursor-pointer text-secondary" style="font-size: 10px; cursor: pointer;"></i>
+            <i onclick="deleteLexicon(${id}, '${type}')" class="fa-solid fa-xmark text-xs cursor-pointer opacity-60 hover:opacity-100"></i>
         `;
         return badge;
     }

@@ -3,63 +3,47 @@
 @section('title', 'Analitik Tren - Global SCM Risk Intel')
 
 @section('content')
-<div class="row mb-4 align-items-center">
-    <div class="col-md-6 mb-3 mb-md-0">
-        <h2 class="fw-bold mb-0">Dasbor Analitik Tren Multi-Indikator</h2>
-        <p class="text-secondary mb-0">Visualisasi historis GDP, inflasi tahunan, fluktuasi valuta asing, dan tren total skor risiko rantai pasok.</p>
+<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+    <div>
+        <h2 class="text-2xl font-bold">Dasbor Analitik Tren Multi-Indikator</h2>
+        <p class="text-muted-foreground">Visualisasi historis GDP, inflasi tahunan, fluktuasi valuta asing, dan tren total skor risiko rantai pasok.</p>
     </div>
-    <div class="col-md-6 text-md-end">
-        <div class="d-inline-block text-start" style="min-width: 250px;">
-            <select id="analyticsCountrySelect" class="form-select bg-dark border-secondary text-white py-2 rounded-3">
-                <option value="">-- Pilih Negara --</option>
-                @foreach($countries as $c)
-                    <option value="{{ $c->iso2 }}" {{ $loop->first ? 'selected' : '' }}>
-                        {{ $c->name }} ({{ $c->iso2 }})
-                    </option>
-                @endforeach
-            </select>
-        </div>
-    </div>
+    <select id="analyticsCountrySelect" class="input-skeuo sm:w-64 shrink-0">
+        <option value="">-- Pilih Negara --</option>
+        @foreach($countries as $c)
+            <option value="{{ $c->iso2 }}" {{ $loop->first ? 'selected' : '' }}>
+                {{ $c->name }} ({{ $c->iso2 }})
+            </option>
+        @endforeach
+    </select>
 </div>
 
-<div class="row g-4">
-    <!-- GDP Trend Chart -->
-    <div class="col-md-6">
-        <div class="glass-card p-4">
-            <h5 class="fw-bold mb-3"><i class="fa-solid fa-chart-line text-primary me-2"></i> Tren GDP (World Bank)</h5>
-            <div style="height: 250px; position: relative;">
-                <canvas id="gdpChart"></canvas>
-            </div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="skeuo-card p-5">
+        <h5 class="font-bold mb-4"><i class="fa-solid fa-chart-line text-primary mr-2"></i> Tren GDP (World Bank)</h5>
+        <div class="relative" style="height: 250px;">
+            <canvas id="gdpChart"></canvas>
         </div>
     </div>
 
-    <!-- Inflation Trend Chart -->
-    <div class="col-md-6">
-        <div class="glass-card p-4">
-            <h5 class="fw-bold mb-3"><i class="fa-solid fa-chart-line text-warning me-2"></i> Tren Inflasi Tahunan (%)</h5>
-            <div style="height: 250px; position: relative;">
-                <canvas id="inflationChart"></canvas>
-            </div>
+    <div class="skeuo-card p-5">
+        <h5 class="font-bold mb-4"><i class="fa-solid fa-chart-line text-warning mr-2"></i> Tren Inflasi Tahunan (%)</h5>
+        <div class="relative" style="height: 250px;">
+            <canvas id="inflationChart"></canvas>
         </div>
     </div>
 
-    <!-- Currency Trend Chart -->
-    <div class="col-md-6">
-        <div class="glass-card p-4">
-            <h5 class="fw-bold mb-3"><i class="fa-solid fa-chart-line text-success me-2"></i> Tren Kurs Harian (vs USD)</h5>
-            <div style="height: 250px; position: relative;">
-                <canvas id="currencyChart"></canvas>
-            </div>
+    <div class="skeuo-card p-5">
+        <h5 class="font-bold mb-4"><i class="fa-solid fa-chart-line text-success mr-2"></i> Tren Kurs Harian (vs USD)</h5>
+        <div class="relative" style="height: 250px;">
+            <canvas id="currencyChart"></canvas>
         </div>
     </div>
 
-    <!-- Risk Score History Chart -->
-    <div class="col-md-6">
-        <div class="glass-card p-4">
-            <h5 class="fw-bold mb-3"><i class="fa-solid fa-chart-line text-danger me-2"></i> Riwayat Skor Risiko Rantai Pasok</h5>
-            <div style="height: 250px; position: relative;">
-                <canvas id="riskChart"></canvas>
-            </div>
+    <div class="skeuo-card p-5">
+        <h5 class="font-bold mb-4"><i class="fa-solid fa-chart-line text-danger mr-2"></i> Riwayat Skor Risiko Rantai Pasok</h5>
+        <div class="relative" style="height: 250px;">
+            <canvas id="riskChart"></canvas>
         </div>
     </div>
 </div>
@@ -68,7 +52,7 @@
 @section('scripts')
 <script>
     const analyticsCountrySelect = document.getElementById('analyticsCountrySelect');
-    
+
     // Chart instances
     let gdpChart = null;
     let inflationChart = null;
@@ -94,12 +78,12 @@
             const indRes = await apiFetch(`/api/countries/${iso}/indicators`);
             if (indRes.success) {
                 const indicators = indRes.data;
-                
+
                 const gdpData = indicators.gdp || [];
                 const inflationData = indicators.inflation || [];
 
-                renderLineChart('gdpChart', gdpChart, gdpData.map(d => d.year), gdpData.map(d => d.value / 1e9), 'GDP (Miliar USD)', '#3b82f6', chart => gdpChart = chart);
-                renderLineChart('inflationChart', inflationChart, inflationData.map(d => d.year), inflationData.map(d => d.value), 'Inflasi (%)', '#f59e0b', chart => inflationChart = chart);
+                renderLineChart('gdpChart', gdpChart, gdpData.map(d => d.year), gdpData.map(d => d.value / 1e9), 'GDP (Miliar USD)', '#0369a1', chart => gdpChart = chart);
+                renderLineChart('inflationChart', inflationChart, inflationData.map(d => d.year), inflationData.map(d => d.value), 'Inflasi (%)', '#d97706', chart => inflationChart = chart);
             }
 
             // 2. Load Currency history
@@ -107,18 +91,18 @@
                 const currRes = await apiFetch(`/api/currency/${currencyCode}/history?days=30`);
                 if (currRes.success) {
                     const cData = currRes.data;
-                    renderLineChart('currencyChart', currencyChart, cData.map(d => d.rate_date), cData.map(d => d.rate_to_usd), `Kurs ${currencyCode} / USD`, '#10b981', chart => currencyChart = chart);
+                    renderLineChart('currencyChart', currencyChart, cData.map(d => d.rate_date), cData.map(d => d.rate_to_usd), `Kurs ${currencyCode} / USD`, '#16a34a', chart => currencyChart = chart);
                 }
             } else {
                 // USD is flat 1.0
-                renderLineChart('currencyChart', currencyChart, [new Date().toDateString()], [1.0], 'Kurs USD / USD', '#10b981', chart => currencyChart = chart);
+                renderLineChart('currencyChart', currencyChart, [new Date().toDateString()], [1.0], 'Kurs USD / USD', '#16a34a', chart => currencyChart = chart);
             }
 
             // 3. Load Risk history
             const riskRes = await apiFetch(`/api/risk/${iso}/history?days=30`);
             if (riskRes.success) {
                 const rData = riskRes.data;
-                renderLineChart('riskChart', riskChart, rData.map(d => new Date(d.calculated_at).toLocaleDateString('id-ID')), rData.map(d => d.total_score), 'Skor Risiko', '#ef4444', chart => riskChart = chart);
+                renderLineChart('riskChart', riskChart, rData.map(d => new Date(d.calculated_at).toLocaleDateString('id-ID')), rData.map(d => d.total_score), 'Skor Risiko', '#dc2626', chart => riskChart = chart);
             }
 
         } catch (err) {
@@ -140,7 +124,7 @@
                     label: label,
                     data: data,
                     borderColor: color,
-                    backgroundColor: 'rgba(255, 255, 255, 0.02)',
+                    backgroundColor: 'rgba(15, 23, 42, 0.02)',
                     borderWidth: 2,
                     fill: false,
                     tension: 0.1
@@ -151,17 +135,17 @@
                 maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        labels: { color: '#94a3b8', font: { family: 'Inter', size: 11 } }
+                        labels: { color: '#64748b', font: { family: 'Fira Sans', size: 11 } }
                     }
                 },
                 scales: {
                     x: {
-                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
-                        ticks: { color: '#94a3b8', font: { family: 'Inter', size: 10 } }
+                        grid: { color: 'rgba(15, 23, 42, 0.06)' },
+                        ticks: { color: '#64748b', font: { family: 'Fira Sans', size: 10 } }
                     },
                     y: {
-                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
-                        ticks: { color: '#94a3b8', font: { family: 'Inter', size: 10 } }
+                        grid: { color: 'rgba(15, 23, 42, 0.06)' },
+                        ticks: { color: '#64748b', font: { family: 'Fira Sans', size: 10 } }
                     }
                 }
             }

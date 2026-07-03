@@ -3,125 +3,123 @@
 @section('title', 'Komparasi Negara - Global SCM Risk Intel')
 
 @section('content')
-<div class="row mb-4 align-items-center">
-    <div class="col-md-6">
-        <h2 class="fw-bold mb-0">Komparasi Risiko Negara</h2>
-        <p class="text-secondary mb-0">Bandingkan profil ekonomi, cuaca, dan kerentanan rantai pasok secara berdampingan.</p>
+<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+    <div>
+        <h2 class="text-2xl font-bold">Komparasi Risiko Negara</h2>
+        <p class="text-muted-foreground">Bandingkan profil ekonomi, cuaca, dan kerentanan rantai pasok secara berdampingan.</p>
     </div>
-    <div class="col-md-6">
-        <div class="d-flex justify-content-md-end gap-2 align-items-center mt-3 mt-md-0">
-            <select id="countryA" class="form-select bg-dark border-secondary text-white py-2 rounded-3" style="max-width: 200px;">
-                <option value="">-- Negara A --</option>
-                @foreach($countries as $c)
-                    <option value="{{ $c->iso2 }}">A - {{ $c->name }}</option>
-                @endforeach
-            </select>
-            <span class="text-secondary fw-bold">VS</span>
-            <select id="countryB" class="form-select bg-dark border-secondary text-white py-2 rounded-3" style="max-width: 200px;">
-                <option value="">-- Negara B --</option>
-                @foreach($countries as $c)
-                    <option value="{{ $c->iso2 }}">B - {{ $c->name }}</option>
-                @endforeach
-            </select>
-            <button id="compareBtn" class="btn btn-primary py-2 px-3 rounded-3 fw-semibold">Bandingkan</button>
-        </div>
+    <div class="flex flex-wrap items-center gap-2 shrink-0">
+        <select id="countryA" class="input-skeuo" style="max-width: 180px;">
+            <option value="">-- Negara A --</option>
+            @foreach($countries as $c)
+                <option value="{{ $c->iso2 }}">A - {{ $c->name }}</option>
+            @endforeach
+        </select>
+        <span class="text-muted-foreground font-bold">VS</span>
+        <select id="countryB" class="input-skeuo" style="max-width: 180px;">
+            <option value="">-- Negara B --</option>
+            @foreach($countries as $c)
+                <option value="{{ $c->iso2 }}">B - {{ $c->name }}</option>
+            @endforeach
+        </select>
+        <button id="compareBtn" class="btn-skeuo">Bandingkan</button>
     </div>
 </div>
 
 <!-- Comparison Placeholder -->
-<div id="comparePlaceholder" class="glass-card p-5 text-center my-5">
-    <i class="fa-solid fa-scale-balanced text-primary display-3 mb-4"></i>
-    <h4 class="fw-bold">Silakan Pilih Dua Negara</h4>
-    <p class="text-secondary max-width-500 mx-auto">Pilih kedua negara yang ingin dibandingkan pada menu kanan atas lalu klik tombol "Bandingkan".</p>
+<div id="comparePlaceholder" class="skeuo-card p-10 text-center">
+    <i class="fa-solid fa-scale-balanced text-primary text-5xl mb-4"></i>
+    <h4 class="font-bold text-lg">Silakan Pilih Dua Negara</h4>
+    <p class="text-muted-foreground max-w-md mx-auto">Pilih kedua negara yang ingin dibandingkan pada menu di atas lalu klik tombol "Bandingkan".</p>
 </div>
 
 <!-- Comparison Table Grid -->
-<div id="compareResult" class="glass-card p-4 my-4" style="display: none;">
-    <div class="table-responsive">
-        <table class="table table-dark table-striped align-middle mb-0">
+<div id="compareResult" class="skeuo-card p-5 hidden">
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm">
             <thead>
-                <tr class="text-secondary border-secondary">
-                    <th style="width: 34%;">Parameter Analisis</th>
-                    <th id="nameHeaderA" class="text-center" style="width: 33%;">Negara A</th>
-                    <th id="nameHeaderB" class="text-center" style="width: 33%;">Negara B</th>
+                <tr class="text-left text-muted-foreground border-b border-border">
+                    <th class="py-2.5" style="width: 34%;">Parameter Analisis</th>
+                    <th id="nameHeaderA" class="py-2.5 text-center" style="width: 33%;">Negara A</th>
+                    <th id="nameHeaderB" class="py-2.5 text-center" style="width: 33%;">Negara B</th>
                 </tr>
             </thead>
             <tbody>
                 <!-- Profile -->
-                <tr class="table-group-divider border-secondary"><td colspan="3" class="small text-primary fw-bold">PROFIL UMUM</td></tr>
-                <tr class="border-secondary">
-                    <td>Ibu Kota</td>
-                    <td id="capitalA" class="text-center">--</td>
-                    <td id="capitalB" class="text-center">--</td>
+                <tr><td colspan="3" class="pt-4 pb-1 text-xs text-primary font-bold uppercase">Profil Umum</td></tr>
+                <tr class="border-t border-border">
+                    <td class="py-2">Ibu Kota</td>
+                    <td id="capitalA" class="py-2 text-center">--</td>
+                    <td id="capitalB" class="py-2 text-center">--</td>
                 </tr>
-                <tr class="border-secondary">
-                    <td>Wilayah (Region)</td>
-                    <td id="regionA" class="text-center">--</td>
-                    <td id="regionB" class="text-center">--</td>
+                <tr class="border-t border-border">
+                    <td class="py-2">Wilayah (Region)</td>
+                    <td id="regionA" class="py-2 text-center">--</td>
+                    <td id="regionB" class="py-2 text-center">--</td>
                 </tr>
-                <tr class="border-secondary">
-                    <td>Mata Uang (Currency)</td>
-                    <td id="currencyA" class="text-center">--</td>
-                    <td id="currencyB" class="text-center">--</td>
+                <tr class="border-t border-border">
+                    <td class="py-2">Mata Uang (Currency)</td>
+                    <td id="currencyA" class="py-2 text-center">--</td>
+                    <td id="currencyB" class="py-2 text-center">--</td>
                 </tr>
 
                 <!-- Economic indicators -->
-                <tr class="border-secondary"><td colspan="3" class="small text-primary fw-bold">MAKROEKONOMI (WORLD BANK)</td></tr>
-                <tr id="rowGdp" class="border-secondary">
-                    <td>GDP Tahunan (USD)</td>
-                    <td id="gdpA" class="text-center">--</td>
-                    <td id="gdpB" class="text-center">--</td>
+                <tr><td colspan="3" class="pt-4 pb-1 text-xs text-primary font-bold uppercase">Makroekonomi (World Bank)</td></tr>
+                <tr id="rowGdp" class="border-t border-border">
+                    <td class="py-2">GDP Tahunan (USD)</td>
+                    <td id="gdpA" class="py-2 text-center font-mono tabular-nums">--</td>
+                    <td id="gdpB" class="py-2 text-center font-mono tabular-nums">--</td>
                 </tr>
-                <tr id="rowInflation" class="border-secondary">
-                    <td>Tingkat Inflasi Tahunan (%)</td>
-                    <td id="inflationA" class="text-center">--</td>
-                    <td id="inflationB" class="text-center">--</td>
+                <tr id="rowInflation" class="border-t border-border">
+                    <td class="py-2">Tingkat Inflasi Tahunan (%)</td>
+                    <td id="inflationA" class="py-2 text-center font-mono tabular-nums">--</td>
+                    <td id="inflationB" class="py-2 text-center font-mono tabular-nums">--</td>
                 </tr>
-                <tr id="rowPopulation" class="border-secondary">
-                    <td>Jumlah Populasi Penduduk</td>
-                    <td id="populationA" class="text-center">--</td>
-                    <td id="populationB" class="text-center">--</td>
+                <tr id="rowPopulation" class="border-t border-border">
+                    <td class="py-2">Jumlah Populasi Penduduk</td>
+                    <td id="populationA" class="py-2 text-center font-mono tabular-nums">--</td>
+                    <td id="populationB" class="py-2 text-center font-mono tabular-nums">--</td>
                 </tr>
-                <tr id="rowExport" class="border-secondary">
-                    <td>Volume Ekspor Tahunan (USD)</td>
-                    <td id="exportA" class="text-center">--</td>
-                    <td id="exportB" class="text-center">--</td>
+                <tr id="rowExport" class="border-t border-border">
+                    <td class="py-2">Volume Ekspor Tahunan (USD)</td>
+                    <td id="exportA" class="py-2 text-center font-mono tabular-nums">--</td>
+                    <td id="exportB" class="py-2 text-center font-mono tabular-nums">--</td>
                 </tr>
-                <tr id="rowImport" class="border-secondary">
-                    <td>Volume Impor Tahunan (USD)</td>
-                    <td id="importA" class="text-center">--</td>
-                    <td id="importB" class="text-center">--</td>
+                <tr id="rowImport" class="border-t border-border">
+                    <td class="py-2">Volume Impor Tahunan (USD)</td>
+                    <td id="importA" class="py-2 text-center font-mono tabular-nums">--</td>
+                    <td id="importB" class="py-2 text-center font-mono tabular-nums">--</td>
                 </tr>
 
                 <!-- Weather metrics -->
-                <tr class="border-secondary"><td colspan="3" class="small text-primary fw-bold">KONDISI CUACA & BADAI (OPEN-METEO)</td></tr>
-                <tr class="border-secondary">
-                    <td>Temperatur saat ini</td>
-                    <td id="tempA" class="text-center">--</td>
-                    <td id="tempB" class="text-center">--</td>
+                <tr><td colspan="3" class="pt-4 pb-1 text-xs text-primary font-bold uppercase">Kondisi Cuaca &amp; Badai (Open-Meteo)</td></tr>
+                <tr class="border-t border-border">
+                    <td class="py-2">Temperatur saat ini</td>
+                    <td id="tempA" class="py-2 text-center font-mono tabular-nums">--</td>
+                    <td id="tempB" class="py-2 text-center font-mono tabular-nums">--</td>
                 </tr>
-                <tr id="rowPrecipitation" class="border-secondary">
-                    <td>Curah Hujan (Curah air)</td>
-                    <td id="precipA" class="text-center">--</td>
-                    <td id="precipB" class="text-center">--</td>
+                <tr id="rowPrecipitation" class="border-t border-border">
+                    <td class="py-2">Curah Hujan (Curah air)</td>
+                    <td id="precipA" class="py-2 text-center font-mono tabular-nums">--</td>
+                    <td id="precipB" class="py-2 text-center font-mono tabular-nums">--</td>
                 </tr>
-                <tr id="rowWind" class="border-secondary">
-                    <td>Kecepatan Angin rata-rata</td>
-                    <td id="windA" class="text-center">--</td>
-                    <td id="windB" class="text-center">--</td>
+                <tr id="rowWind" class="border-t border-border">
+                    <td class="py-2">Kecepatan Angin rata-rata</td>
+                    <td id="windA" class="py-2 text-center font-mono tabular-nums">--</td>
+                    <td id="windB" class="py-2 text-center font-mono tabular-nums">--</td>
                 </tr>
-                <tr id="rowStorm" class="border-secondary">
-                    <td>Indeks Risiko Badai (0 - 100)</td>
-                    <td id="stormA" class="text-center">--</td>
-                    <td id="stormB" class="text-center">--</td>
+                <tr id="rowStorm" class="border-t border-border">
+                    <td class="py-2">Indeks Risiko Badai (0 - 100)</td>
+                    <td id="stormA" class="py-2 text-center font-mono tabular-nums">--</td>
+                    <td id="stormB" class="py-2 text-center font-mono tabular-nums">--</td>
                 </tr>
 
                 <!-- Final SCM Risk Score -->
-                <tr class="border-secondary"><td colspan="3" class="small text-primary fw-bold">PENILAIAN RISIKO GABUNGAN</td></tr>
-                <tr id="rowRisk" class="border-secondary py-3">
-                    <td class="fw-bold">Total Skor Risiko SCM</td>
-                    <td id="riskA" class="text-center fw-bold">--</td>
-                    <td id="riskB" class="text-center fw-bold">--</td>
+                <tr><td colspan="3" class="pt-4 pb-1 text-xs text-primary font-bold uppercase">Penilaian Risiko Gabungan</td></tr>
+                <tr id="rowRisk" class="border-t border-border">
+                    <td class="py-3 font-bold">Total Skor Risiko SCM</td>
+                    <td id="riskA" class="py-3 text-center font-bold font-mono tabular-nums">--</td>
+                    <td id="riskB" class="py-3 text-center font-bold font-mono tabular-nums">--</td>
                 </tr>
             </tbody>
         </table>
@@ -151,8 +149,8 @@
             return;
         }
 
-        comparePlaceholder.style.display = 'none';
-        compareResult.style.display = 'none';
+        comparePlaceholder.classList.add('hidden');
+        compareResult.classList.add('hidden');
 
         try {
             const res = await apiFetch(`/api/compare?a=${a}&b=${b}`);
@@ -162,8 +160,8 @@
                 const cb = data.country_b;
 
                 // Headers flag + name
-                document.getElementById('nameHeaderA').innerHTML = `<img src="https://flagcdn.com/w40/${ca.iso2.toLowerCase()}.png" class="me-2 rounded shadow-sm border border-secondary"> ${ca.name}`;
-                document.getElementById('nameHeaderB').innerHTML = `<img src="https://flagcdn.com/w40/${cb.iso2.toLowerCase()}.png" class="me-2 rounded shadow-sm border border-secondary"> ${cb.name}`;
+                document.getElementById('nameHeaderA').innerHTML = `<img src="https://flagcdn.com/w40/${ca.iso2.toLowerCase()}.png" class="inline mr-2 rounded shadow-sm border border-border"> ${ca.name}`;
+                document.getElementById('nameHeaderB').innerHTML = `<img src="https://flagcdn.com/w40/${cb.iso2.toLowerCase()}.png" class="inline mr-2 rounded shadow-sm border border-border"> ${cb.name}`;
 
                 // General Profile
                 document.getElementById('capitalA').innerText = ca.capital || '--';
@@ -196,12 +194,12 @@
                 document.getElementById('stormB').innerText = cb.weather ? cb.weather.storm_risk : '--';
 
                 // Risk
-                document.getElementById('riskA').innerHTML = ca.risk ? `${Math.round(ca.risk.total_score)} <span class="badge rounded-pill risk-${ca.risk.level} ms-2 px-2.5 py-1 text-uppercase">${ca.risk.level}</span>` : '--';
-                document.getElementById('riskB').innerHTML = cb.risk ? `${Math.round(cb.risk.total_score)} <span class="badge rounded-pill risk-${cb.risk.level} ms-2 px-2.5 py-1 text-uppercase">${cb.risk.level}</span>` : '--';
+                document.getElementById('riskA').innerHTML = ca.risk ? `${Math.round(ca.risk.total_score)} <span class="risk-${ca.risk.level} ml-2">${ca.risk.level}</span>` : '--';
+                document.getElementById('riskB').innerHTML = cb.risk ? `${Math.round(cb.risk.total_score)} <span class="risk-${cb.risk.level} ml-2">${cb.risk.level}</span>` : '--';
 
                 // Clear highlights
                 const tds = compareResult.querySelectorAll('td');
-                tds.forEach(td => td.classList.remove('text-success', 'fw-bold'));
+                tds.forEach(td => td.classList.remove('text-success', 'font-bold'));
 
                 // Apply dynamic highlights (higher GDP/exports, lower inflation/risk score/storm risk index)
                 highlightBetterValue(ca.gdp, cb.gdp, 'gdpA', 'gdpB', true);
@@ -213,7 +211,7 @@
                 highlightBetterValue(ca.weather?.storm_risk, cb.weather?.storm_risk, 'stormA', 'stormB', false);
                 highlightBetterValue(ca.risk?.total_score, cb.risk?.total_score, 'riskA', 'riskB', false);
 
-                compareResult.style.display = 'block';
+                compareResult.classList.remove('hidden');
             }
         } catch (err) {
             showToast(err.message || 'Gagal memuat komparasi.', 'error');
@@ -224,15 +222,15 @@
         if (valA === null || valB === null || valA === undefined || valB === undefined) return;
         const elA = document.getElementById(idA);
         const elB = document.getElementById(idB);
-        
+
         if (valA === valB) return;
 
         if (higherIsBetter) {
-            if (valA > valB) elA.classList.add('text-success', 'fw-bold');
-            else elB.classList.add('text-success', 'fw-bold');
+            if (valA > valB) elA.classList.add('text-success', 'font-bold');
+            else elB.classList.add('text-success', 'font-bold');
         } else {
-            if (valA < valB) elA.classList.add('text-success', 'fw-bold');
-            else elB.classList.add('text-success', 'fw-bold');
+            if (valA < valB) elA.classList.add('text-success', 'font-bold');
+            else elB.classList.add('text-success', 'font-bold');
         }
     }
 </script>

@@ -1,20 +1,20 @@
-@extends('layouts.app')
+@extends('layouts.guest')
 
 @section('title', 'Masuk - Global SCM Risk Intel')
 
 @section('content')
-<div class="row justify-content-center align-items-center" style="min-height: 70vh;">
-    <div class="col-md-5">
-        <div class="glass-card p-5 shadow-lg">
-            <div class="text-center mb-4">
-                <i class="fa-solid fa-lock-open text-primary fs-1 mb-3"></i>
-                <h3 class="fw-bold">Masuk Platform</h3>
-                <p class="text-secondary">Silakan masuk untuk mengakses fitur portofolio dan watchlist</p>
+<div class="flex items-center justify-center" style="min-height: 65vh;">
+    <div class="w-full max-w-md animate-slide-up">
+        <div class="skeuo-card p-8">
+            <div class="text-center mb-6">
+                <i class="fa-solid fa-lock-open text-primary text-3xl mb-3"></i>
+                <h3 class="font-bold text-xl">Masuk Platform</h3>
+                <p class="text-muted-foreground">Silakan masuk untuk mengakses fitur portofolio dan watchlist</p>
             </div>
 
             @if($errors->any())
-                <div class="alert alert-danger border-0 bg-danger bg-opacity-10 text-danger rounded-3 mb-4">
-                    <ul class="mb-0">
+                <div class="bg-danger/10 text-danger border border-danger/25 rounded-xl p-3 mb-4 text-sm">
+                    <ul class="list-disc pl-4">
                         @foreach($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
@@ -22,26 +22,24 @@
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('login') }}">
+            <form method="POST" action="{{ route('login') }}" class="space-y-4">
                 @csrf
-                <div class="mb-4">
-                    <label for="email" class="form-label text-secondary fw-semibold">Alamat Email</label>
-                    <input type="email" class="form-control bg-dark border-secondary text-white py-2 px-3 rounded-3" id="email" name="email" value="{{ old('email') }}" required autofocus>
+                <div>
+                    <label for="email" class="block text-sm font-semibold text-muted-foreground mb-1.5">Alamat Email</label>
+                    <input type="email" class="input-skeuo" id="email" name="email" value="{{ old('email') }}" required autofocus>
                 </div>
-                <div class="mb-4">
-                    <label for="password" class="form-label text-secondary fw-semibold">Password</label>
-                    <input type="password" class="form-control bg-dark border-secondary text-white py-2 px-3 rounded-3" id="password" name="password" required>
+                <div>
+                    <label for="password" class="block text-sm font-semibold text-muted-foreground mb-1.5">Password</label>
+                    <input type="password" class="input-skeuo" id="password" name="password" required>
                 </div>
-                <div class="mb-4 form-check d-flex justify-content-between">
-                    <div>
-                        <input type="checkbox" class="form-check-input" id="remember" name="remember">
-                        <label class="form-check-label text-secondary" for="remember">Ingat Saya</label>
-                    </div>
+                <div class="flex items-center gap-2">
+                    <input type="checkbox" class="w-4 h-4 accent-primary rounded" id="remember" name="remember">
+                    <label class="text-sm text-muted-foreground" for="remember">Ingat Saya</label>
                 </div>
-                <button type="submit" class="btn btn-primary w-100 py-2.5 rounded-3 fw-semibold">Masuk</button>
+                <button type="submit" class="btn-skeuo w-full">Masuk</button>
             </form>
-            <div class="text-center mt-4">
-                <p class="text-secondary mb-0">Belum punya akun? <a href="{{ route('register') }}" class="text-primary text-decoration-none">Daftar Sekarang</a></p>
+            <div class="text-center mt-6">
+                <p class="text-muted-foreground">Belum punya akun? <a href="{{ route('register') }}" class="text-primary font-semibold hover:underline">Daftar Sekarang</a></p>
             </div>
         </div>
     </div>
