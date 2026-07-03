@@ -4,107 +4,38 @@
 
 @section('content')
 <div class="grid grid-cols-1 lg:grid-cols-12 min-h-screen w-full">
-    <!-- Left Illustrative Panel (5 Columns) -->
-    <div class="hidden lg:flex lg:col-span-5 flex-col justify-between p-12 text-white bg-slate-950 relative overflow-hidden">
-        <!-- Technical Grid Background -->
-        <div class="absolute inset-0 bg-[linear-gradient(rgba(20,184,166,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(20,184,166,0.04)_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none z-0"></div>
-        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none z-0"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent/10 rounded-full blur-3xl pointer-events-none z-0"></div>
+    <!-- Left Decorative Panel (5 Columns) with Cartoon Illustration -->
+    <div class="hidden lg:flex lg:col-span-5 flex-col justify-between p-12 text-[#0f172a] bg-gradient-to-br from-[#f0fdfa] via-[#ccfbf1] to-[#e0f2fe] relative overflow-hidden border-r border-border">
+        <!-- Abstract gradient circles -->
+        <div class="absolute top-[-10%] left-[-10%] w-80 h-80 bg-teal-200/25 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-72 h-72 bg-sky-200/35 rounded-full blur-3xl pointer-events-none"></div>
 
         <!-- Top branding -->
         <a href="{{ route('home') }}" class="flex items-center gap-2.5 z-10">
-            <div class="bg-primary/20 p-2 rounded-xl border border-primary/30">
-                <i class="fa-solid fa-earth-americas text-xl text-teal-400"></i>
+            <div class="bg-primary/10 p-2 rounded-xl border border-primary/20">
+                <i class="fa-solid fa-earth-americas text-xl text-primary"></i>
             </div>
-            <span class="font-heading font-extrabold text-xl tracking-wide">GlobalSCM <span class="text-teal-400">Intel</span></span>
+            <span class="font-heading font-extrabold text-xl tracking-wide">GlobalSCM <span class="text-primary">Intel</span></span>
         </a>
 
-        <!-- Middle Rich Illustrative Dashboard Mockup -->
-        <div class="my-auto space-y-10 z-10 animate-slide-up">
-            <div class="space-y-4">
-                <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-400/10 border border-teal-400/20 text-teal-400 text-xs font-bold uppercase tracking-wider">
-                    <i class="fa-solid fa-shield-halved animate-pulse"></i> {{ __('Sistem Pengambilan Keputusan') }}
-                </span>
-                <h2 class="text-3xl font-extrabold leading-tight text-white">{{ __('Keputusan Logistik yang Cerdas Dimulai di Sini') }}</h2>
-                <p class="text-slate-400 text-sm leading-relaxed max-w-sm">
+        <!-- Middle Cartoon Illustration & Copy -->
+        <div class="my-auto space-y-8 z-10 text-center animate-slide-up">
+            <!-- Cartoon Image Asset -->
+            <div class="relative inline-block max-w-[280px] sm:max-w-[320px] mx-auto">
+                <img src="{{ asset('images/auth_illustration.png') }}" alt="{{ __('Ilustrasi Logistik Rantai Pasok') }}" class="w-full h-auto rounded-2xl drop-shadow-lg transform -rotate-1 hover:rotate-0 transition-transform duration-300">
+            </div>
+
+            <div class="space-y-3 max-w-sm mx-auto text-left">
+                <h2 class="text-2xl font-extrabold leading-tight text-[#0f172a]">{{ __('Keputusan Logistik yang Cerdas Dimulai di Sini') }}</h2>
+                <p class="text-[#475569] text-sm leading-relaxed">
                     {{ __('Masuk untuk mengakses dasbor risiko kustom, memantau watchlist Anda, menganalisis pelabuhan global, dan mengambil keputusan mitigasi rantai pasok berbasis data.') }}
                 </p>
             </div>
-
-            <!-- ILLUSTRATION: Supply Chain Risk Hub Control Room Mockup -->
-            <div class="relative w-full max-w-sm bg-slate-900/80 backdrop-blur-md border border-slate-800 p-6 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] space-y-6">
-                <!-- Visual Map Pathway Simulation -->
-                <div class="space-y-2">
-                    <div class="flex items-center justify-between text-xs text-slate-400 font-bold uppercase tracking-wide">
-                        <span><i class="fa-solid fa-route text-teal-400 mr-1.5"></i> {{ __('Rute Logistik Aktif') }}</span>
-                        <span class="text-teal-400 font-mono">LIVE FEED</span>
-                    </div>
-                    <!-- Node Map Box -->
-                    <div class="h-32 bg-slate-950/60 rounded-xl relative border border-slate-800/80 overflow-hidden">
-                        <!-- Connecting dotted pathways -->
-                        <svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Pathway 1 -->
-                            <path d="M 30,80 Q 150,20 320,60" fill="none" stroke="rgba(20,184,166,0.2)" stroke-width="2" stroke-dasharray="4 4" />
-                            <!-- Pathway 2 -->
-                            <path d="M 30,80 Q 180,110 320,60" fill="none" stroke="rgba(20,184,166,0.3)" stroke-width="2" />
-                            <!-- Animate dot moving along path -->
-                            <circle r="4" fill="#2dd4bf">
-                                <animateMotion dur="5s" repeatCount="indefinite" path="M 30,80 Q 180,110 320,60" />
-                            </circle>
-                        </svg>
-
-                        <!-- Glowing Port Nodes -->
-                        <div class="absolute left-8 top-16 flex flex-col items-center">
-                            <span class="w-3 h-3 bg-teal-400 rounded-full animate-ping absolute"></span>
-                            <span class="w-3 h-3 bg-teal-500 rounded-full border-2 border-slate-900 z-10"></span>
-                            <span class="text-[9px] font-bold text-slate-400 mt-1 font-mono">JAKARTA</span>
-                        </div>
-                        <div class="absolute right-12 top-10 flex flex-col items-center">
-                            <span class="w-3 h-3 bg-rose-400 rounded-full animate-ping absolute"></span>
-                            <span class="w-3 h-3 bg-rose-500 rounded-full border-2 border-slate-900 z-10"></span>
-                            <span class="text-[9px] font-bold text-slate-400 mt-1 font-mono">SHANGHAI</span>
-                        </div>
-
-                        <!-- Floating Boat Info Overlay -->
-                        <div class="absolute left-1/3 top-6 bg-slate-900/90 border border-slate-800 px-2.5 py-1 rounded-lg flex items-center gap-1.5 shadow-md">
-                            <i class="fa-solid fa-ship text-[10px] text-teal-400"></i>
-                            <span class="text-[9px] font-bold text-slate-300 font-mono">CARGO_122</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Secondary widgets: Risk gauge and weather -->
-                <div class="grid grid-cols-2 gap-4">
-                    <!-- Volatility Widget -->
-                    <div class="bg-slate-950/40 border border-slate-800/80 p-3 rounded-xl">
-                        <div class="flex items-center justify-between mb-1.5">
-                            <span class="text-[10px] text-slate-400 font-bold uppercase">{{ __('Kurs Volas') }}</span>
-                            <i class="fa-solid fa-chart-line text-emerald-400 text-xs"></i>
-                        </div>
-                        <strong class="text-sm font-mono text-slate-100">USD/IDR</strong>
-                        <div class="flex items-center gap-1 text-[10px] text-emerald-400 mt-1 font-bold">
-                            <i class="fa-solid fa-caret-up"></i> +0.42%
-                        </div>
-                    </div>
-
-                    <!-- Extreme Weather Widget -->
-                    <div class="bg-slate-950/40 border border-slate-800/80 p-3 rounded-xl">
-                        <div class="flex items-center justify-between mb-1.5">
-                            <span class="text-[10px] text-slate-400 font-bold uppercase">{{ __('Indeks Cuaca') }}</span>
-                            <i class="fa-solid fa-cloud-showers-water text-rose-400 text-xs"></i>
-                        </div>
-                        <strong class="text-sm font-mono text-slate-100">Storm Risk</strong>
-                        <div class="flex items-center gap-1 text-[10px] text-rose-400 mt-1 font-bold">
-                            <i class="fa-solid fa-triangle-exclamation animate-pulse"></i> {{ __('Tinggi') }}
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
-        <!-- Bottom copyright -->
-        <div class="text-xs text-slate-500 z-10 font-mono">
-            &copy; {{ date('Y') }} GlobalSCM Intel. Dashboard Decision-Support System v1.0.5
+        <!-- Bottom footer -->
+        <div class="text-xs text-slate-400 z-10 font-medium">
+            &copy; {{ date('Y') }} GlobalSCM Intel.
         </div>
     </div>
 
