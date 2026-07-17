@@ -42,6 +42,52 @@ class RefreshDataCommand extends Command
         $countries = Country::all();
         $this->info("Found {$countries->count()} countries in the database.");
 
+        // 0. Auto-sync WPI ports if database is empty
+        if (\App\Models\Port::count() === 0) {
+            $this->info('Tabel pelabuhan kosong. Melakukan sinkronisasi otomatis dari API WPI...');
+            $wpiClient = new \App\Integrations\WorldPortIndexClient();
+            $portsData = $wpiClient->getPorts();
+            if (!empty($portsData)) {
+                $countriesMap = $countries->keyBy(function ($c) {
+                    return strtolower($c->name);
+                });
+                $imported = 0;
+                \Illuminate\Support\Facades\DB::transaction(function () use ($portsData, $countriesMap, &$imported) {
+                    foreach ($portsData as $item) {
+                        $portCountry = $item['country'] ?? '';
+                        $countryKey = strtolower(trim($portCountry));
+                        if ($countriesMap->has($countryKey)) {
+                            $country = $countriesMap->get($countryKey);
+                            $pName = $item['wpi_port_name'] ?? '';
+                            $pLat = $item['latitude'] ?? null;
+                            $pLng = $item['longitude'] ?? null;
+                            $pWpi = $item['wpi_port_id'] ?? null;
+                            $pSize = $item['port_size'] ?? null;
+
+                            if (!empty($pName) && $pLat !== null && $pLng !== null) {
+                                \App\Models\Port::updateOrCreate(
+                                    [
+                                        'country_id' => $country->id,
+                                        'name' => trim($pName)
+                                    ],
+                                    [
+                                        'wpi_code' => $pWpi ? (string) $pWpi : null,
+                                        'latitude' => (float) $pLat,
+                                        'longitude' => (float) $pLng,
+                                        'harbor_size' => $pSize ? trim($pSize) : null
+                                    ]
+                                );
+                                $imported++;
+                            }
+                        }
+                    }
+                });
+                $this->info("Sinkronisasi otomatis pelabuhan berhasil: {$imported} pelabuhan diimpor.");
+            } else {
+                $this->error('Gagal mengambil data pelabuhan dari API WPI.');
+            }
+        }
+
         // 1. Sync Currency rates vs USD
         $this->info('Syncing exchange rates...');
         $rateClient = new ExchangeRateClient();
