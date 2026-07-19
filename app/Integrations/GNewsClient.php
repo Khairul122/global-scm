@@ -2,17 +2,26 @@
 
 namespace App\Integrations;
 
+use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class GNewsClient
 {
+    private const COOLDOWN_CACHE_KEY = 'gnews:rate_limited_until';
+
     public function getNews(string $category = 'logistics', ?string $countryName = null): array
     {
-        $apiKey = env('GNEWS_API_KEY');
+        $apiKey = config('services.gnews.key');
 
         if (!$apiKey) {
             Log::info('GNEWS_API_KEY not set, skipping news fetch.');
+            return [];
+        }
+
+        if (Cache::has(self::COOLDOWN_CACHE_KEY)) {
+            Log::info('GNews API is in cooldown after hitting rate limit; skipping fetch and serving cached data.');
             return [];
         }
 
@@ -31,7 +40,10 @@ class GNewsClient
             $query = $countryName ? "{$topicQuery} AND {$countryName}" : $topicQuery;
 
             $response = Http::timeout(10)
-                ->retry(2, 800)
+                // Only retry on network/connection failures, not on HTTP error
+                // responses like 429 (rate limit) or 403 (quota exceeded) -
+                // retrying those just burns through the remaining daily quota faster.
+                ->retry(2, 800, fn ($exception) => $exception instanceof ConnectionException)
                 ->get("https://gnews.io/api/v4/search", [
                     'q' => $query,
                     'lang' => 'en',
@@ -57,7 +69,20 @@ class GNewsClient
                 return $result;
             }
 
-            Log::warning("GNews API responded with status {$response->status()} for query '{$query}'.");
+            if ($response->status() === 403) {
+                // 403 means the daily quota is exhausted; GNews only resets it at
+                // 00:00 UTC, so a short fixed cooldown just causes repeated failed
+                // retries all day. Wait until the actual UTC reset instead.
+                $until = now('UTC')->addDay()->startOfDay();
+                Cache::put(self::COOLDOWN_CACHE_KEY, $until->toIso8601String(), $until);
+                Log::warning("GNews API daily quota exhausted (status 403). Pausing further requests until {$until->toIso8601String()} (00:00 UTC reset); serving existing cached data instead.");
+            } elseif ($response->status() === 429) {
+                $cooldownMinutes = (int) config('services.gnews.cooldown_minutes', 60);
+                Cache::put(self::COOLDOWN_CACHE_KEY, now()->addMinutes($cooldownMinutes)->toIso8601String(), now()->addMinutes($cooldownMinutes));
+                Log::warning("GNews API rate limit hit (status 429). Pausing further requests for {$cooldownMinutes} minutes; serving existing cached data instead.");
+            } else {
+                Log::warning("GNews API responded with status {$response->status()} for query '{$query}'.");
+            }
         } catch (\Exception $e) {
             Log::warning("GNews API error: " . $e->getMessage());
         }
