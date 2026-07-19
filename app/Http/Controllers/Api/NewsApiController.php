@@ -38,7 +38,7 @@ class NewsApiController extends ApiController
         if ($cachedArticlesCount === 0 || ($latestArticle && $latestArticle->created_at->isBefore($oneHourAgo))) {
             $gnews = new GNewsClient();
             $sentimentService = new SentimentService();
-            $fetchedNews = $gnews->getNews($category, $country ? $country->iso2 : null);
+            $fetchedNews = $gnews->getNews($category, $country ? $country->name : null);
 
             if (!empty($fetchedNews)) {
                 // Delete old cache for this category & country to avoid piling up
